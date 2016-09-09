@@ -114,6 +114,7 @@ namespace DPA_Musicsheets
         private void btn_ShowContent_Click(object sender, RoutedEventArgs e)
         {
             ShowMidiTracks(MidiReader.ReadMidi(txt_MidiFilePath.Text));
+            MidiParser.parseMidi(txt_MidiFilePath.Text);
         }
 
         private void ShowMidiTracks(IEnumerable<MidiTrack> midiTracks)
