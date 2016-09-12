@@ -81,7 +81,6 @@ namespace DPA_Musicsheets
                 }
                 
             }
-            Console.WriteLine(String.Format("{0}/{1}", measure.Item1, measure.Item2));
             return staff;
         }
 

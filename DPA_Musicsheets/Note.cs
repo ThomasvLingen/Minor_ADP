@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets
 {
-    enum NoteLevel { C, D, E, F, G, A, B };
+    enum NoteLevel { C, D, E, F, G, A, B, rest };
     enum NoteAlteration { flat, sharp, none};
 
     class D_Note
@@ -15,7 +15,7 @@ namespace DPA_Musicsheets
         NoteLevel level;
         int octave;
         NoteAlteration alteration;
-        int length; // in 1/16th
+        int length; // in delta time
         bool length_modifier;
 
         public D_Note(NoteLevel level, int length, int octave = 1,
