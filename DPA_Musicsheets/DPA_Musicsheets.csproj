@@ -68,11 +68,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Bar.cs" />
+    <Compile Include="D_Bar.cs" />
     <Compile Include="D_NoteFactory.cs" />
     <Compile Include="MidiParser.cs" />
     <Compile Include="MidiTrack.cs" />
-    <Compile Include="Staff.cs" />
+    <Compile Include="D_Staff.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,7 +89,7 @@
   <ItemGroup>
     <Compile Include="MidiPlayer.cs" />
     <Compile Include="MidiReader.cs" />
-    <Compile Include="Note.cs" />
+    <Compile Include="D_Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
