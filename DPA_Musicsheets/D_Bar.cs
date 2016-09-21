@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets
 {
-    class D_Bar
+    public class D_Bar
     {
         public List<D_Note> notes { get; private set; }
 

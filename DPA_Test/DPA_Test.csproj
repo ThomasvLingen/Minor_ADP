@@ -60,6 +60,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DPA_Musicsheets\DPA_Musicsheets.csproj">
+      <Project>{78bc0c32-8b72-44d2-ba4d-20e3a0a046d4}</Project>
+      <Name>DPA_Musicsheets</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

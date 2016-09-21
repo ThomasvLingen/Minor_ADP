@@ -9,7 +9,7 @@ namespace DPA_Musicsheets
     enum NoteLevel { C, D, E, F, G, A, B, rest };
     enum NoteAlteration { flat, sharp, none};
 
-    class D_Note
+    public class D_Note
     {
         bool is_rest;
         NoteLevel level;

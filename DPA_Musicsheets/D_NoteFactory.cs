@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets
 {
-    class D_NoteFactory
+    public class D_NoteFactory
     {
 
         public static D_Note create_node(int keycode, int delta_time)
