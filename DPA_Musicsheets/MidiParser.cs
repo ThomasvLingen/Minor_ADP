@@ -19,7 +19,7 @@ namespace DPA_Musicsheets
 
         private static D_Staff parseSequence(Sequence sequence)
         {
-            D_Staff staff = new D_Staff(0,0);
+            D_Staff staff = new D_Staff();
             Tuple<int, int> measure = new Tuple<int, int>(-1, -1);
 
             
