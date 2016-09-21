@@ -9,12 +9,14 @@ namespace DPA_Musicsheets
     public class D_Staff
     {
         public List<D_Bar> bars { get; private set; }
-        public Tuple<int, int> measure { get; private set; }
+        public List<Tuple<int, Tuple<int, int>>> measures { get; private set; }
+        public int tempo { get; set; }
 
-        public D_Staff(int top_measure, int bottom_measure)
+        public D_Staff()
         {
             this.bars = new List<D_Bar>();
-            this.measure = new Tuple<int, int>(top_measure, bottom_measure);
+            this.measures = new List<Tuple<int, Tuple<int, int>>>();
+            this.tempo = -1;
         }
 
         public void addBar(D_Bar bar)
@@ -27,9 +29,23 @@ namespace DPA_Musicsheets
             this.bars.Remove(bar);
         }
 
-        public void setMeasure(int top_measure, int bottom_measure)
+        public void addMeasure(int time, int top, int bottom)
         {
-            this.measure = new Tuple<int, int>(top_measure, bottom_measure);
+            Tuple<int, int> measure = new Tuple<int, int>(top, bottom);
+            Tuple<int, Tuple<int, int>> timed_measure = new Tuple<int, Tuple<int, int>>(time, measure);
+
+            this.measures.Add(timed_measure);
+        }
+
+        public Tuple<int, int> getMeasure(int time)
+        {
+            for(int i = 0; i < measures.Count; i++) {
+                if(time < measures[i+1].Item1) {
+                    return measures[i].Item2;
+                }
+            }
+
+            return null;
         }
     }
 }
