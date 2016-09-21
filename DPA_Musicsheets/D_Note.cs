@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets
 {
-    enum NoteLevel { C, D, E, F, G, A, B, rest };
-    enum NoteAlteration { flat, sharp, none};
+    public enum NoteLevel { C, D, E, F, G, A, B, rest };
+    public enum NoteAlteration { flat, sharp, none};
 
     public class D_Note
     {
-        bool is_rest;
-        NoteLevel level;
-        int octave;
-        NoteAlteration alteration;
-        int length; // in delta time
-        bool length_modifier;
+        public bool is_rest { get; }
+        public NoteLevel level { get; }
+        public int octave { get; }
+        public NoteAlteration alteration { get; }
+        public int length { get; } // in delta time
+        public bool length_modifier { get; }
 
         public D_Note(NoteLevel level, int length, int octave = 1,
                     NoteAlteration alteration = NoteAlteration.none, bool is_rest = false,
