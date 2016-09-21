@@ -9,7 +9,7 @@ namespace DPA_Musicsheets
     public class D_NoteFactory
     {
 
-        public static D_Note create_node(int keycode, int delta_time)
+        public static D_Note create_note(int keycode, int delta_time)
         { 
             Tuple<NoteLevel, NoteAlteration> note_alt = get_level_and_alteration(keycode);
             return new D_Note(
