@@ -15,7 +15,7 @@ namespace DPA_Musicsheets
         public NoteLevel level { get; }
         public int octave { get; }
         public NoteAlteration alteration { get; }
-        public int length { get; } // in delta time
+        public int length { get; } // in 16th notes
         public bool length_modifier { get; }
 
         public D_Note(NoteLevel level, int length, int octave = 1,

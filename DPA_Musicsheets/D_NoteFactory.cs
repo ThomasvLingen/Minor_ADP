@@ -9,22 +9,22 @@ namespace DPA_Musicsheets
     public class D_NoteFactory
     {
 
-        public static D_Note create_note(int keycode, int delta_time)
+        public static D_Note create_note(int keycode, int beats)
         { 
             Tuple<NoteLevel, NoteAlteration> note_alt = get_level_and_alteration(keycode);
             return new D_Note(
                 note_alt.Item1,
-                delta_time,
+                beats,
                 get_octave(keycode),
                 note_alt.Item2
             );
         }
 
-        public static D_Note create_rest(int delta_time)
+        public static D_Note create_rest(int beats)
         {
             return new D_Note(
                 NoteLevel.rest,
-                delta_time,
+                beats,
                 0,
                 NoteAlteration.none,
                 true
