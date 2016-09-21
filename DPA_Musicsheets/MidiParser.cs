@@ -14,7 +14,50 @@ namespace DPA_Musicsheets
             var sequence = new Sequence();
             sequence.Load(midiFileLocation);
 
-            return parseSequence(sequence);
+            return good_parseSequence(sequence);
+        }
+
+        private static D_Staff good_parseSequence(Sequence sequence)
+        {
+            D_Staff staff = new D_Staff();
+            int bpm = -1;
+            int ticks_per_beat = sequence.Division;
+            Console.WriteLine(String.Format("Ticks per beat: {0}", ticks_per_beat));
+
+            Track track = sequence[0];
+
+            foreach (var midiEvent in track.Iterator()) {
+                // Elke messagetype komt ook overeen met een class. Daarom moet elke keer gecast worden.
+                switch (midiEvent.MidiMessage.MessageType) {
+                    case MessageType.Meta:
+                        var metaMessage = midiEvent.MidiMessage as MetaMessage;
+                        byte[] meta_bytes = metaMessage.GetBytes();
+
+                        // Time signature
+                        if (metaMessage.MetaType == MetaType.TimeSignature) {
+                            int top_number = meta_bytes[0];
+                            int bottom_number = (int)(Math.Pow(2, meta_bytes[1]));
+                            int time_signature_event = midiEvent.AbsoluteTicks;
+
+                            Console.WriteLine(String.Format("[{2}] Time signature is {0}/{1}", top_number, bottom_number, time_signature_event));
+                            staff.addMeasure(time_signature_event, top_number, bottom_number);
+                        }
+
+                        // BPM
+                        if (metaMessage.MetaType == MetaType.Tempo) {
+                            // Bitshifting is nodig om het tempo in BPM te berekenen
+                            int tempo = (meta_bytes[0] & 0xff) << 16 | (meta_bytes[1] & 0xff) << 8 | (meta_bytes[2] & 0xff);
+                            bpm = 60000000 / tempo;
+
+                            staff.tempo = bpm;
+                            Console.WriteLine(String.Format("BPM is {0}", staff.tempo));
+                        }
+                        break;
+                }
+
+            }
+
+            return staff;
         }
 
         private static D_Staff parseSequence(Sequence sequence)
