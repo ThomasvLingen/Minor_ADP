@@ -39,8 +39,11 @@ namespace DPA_Musicsheets
 
         public Tuple<int, int> getMeasure(int time)
         {
+            if(time > measures[measures.Count - 1].Item1) {
+                return measures[measures.Count - 1].Item2;
+            }
             for(int i = 0; i < measures.Count; i++) {
-                if(time < measures[i+1].Item1) {
+                if (time < measures[i+1].Item1) {
                     return measures[i].Item2;
                 }
             }
