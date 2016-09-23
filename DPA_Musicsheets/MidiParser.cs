@@ -68,44 +68,48 @@ namespace DPA_Musicsheets
             }
         }
 
-        private static D_Staff good_parseSequence(Sequence sequence)
+        private static List<D_Note> get_notes_from_track(Track track, D_Staff staff, int ticks_per_beat)
         {
-            D_Staff staff = new D_Staff();
             List<D_Note> notes = new List<D_Note>();
-
-            int ticks_per_beat = sequence.Division;
-            set_tempo(sequence, staff);
-            set_measures(sequence, staff);
-            Console.WriteLine(String.Format("Ticks per beat: {0}", ticks_per_beat));
-            Console.WriteLine(String.Format("Tempo: {0}", staff.tempo));
-
-            Track track = sequence[1];
 
             MidiEvent previous_midi_event = null;
             foreach (var midiEvent in track.Iterator()) {
-                // Elke messagetype komt ook overeen met een class. Daarom moet elke keer gecast worden.
                 switch (midiEvent.MidiMessage.MessageType) {
-                    // ChannelMessages zijn de inhoudelijke messages.
                     case MessageType.Channel:
                         var channelMessage = midiEvent.MidiMessage as ChannelMessage;
-                        // Data1: De keycode. 0 = laagste C, 1 = laagste C#, 2 = laagste D etc.
-                        // 160 is centrale C op piano.
+
                         if (previous_midi_event != null) {
                             if (channelMessage.Command.ToString() == "NoteOn" && channelMessage.Data2 == 0) {
-                                double note_beats = ((double)midiEvent.AbsoluteTicks - (double)previous_midi_event.AbsoluteTicks) / (double)ticks_per_beat;
                                 Tuple<int, int> current_measure = staff.getMeasure(previous_midi_event.AbsoluteTicks);
-                                double note_beats_measured = note_beats / (current_measure.Item2 / 16);
-                                // notes.Add(D_NoteFactory.create_note())
-                                Console.WriteLine(String.Format("Tellen: {0}", note_beats));
-                                Console.WriteLine(String.Format("Tellen measured: {0}", note_beats_measured));
+
+                                double note_beats = ((double)midiEvent.AbsoluteTicks - (double)previous_midi_event.AbsoluteTicks) / (double)ticks_per_beat;
+                                int note_beats_measured = (int)(note_beats / ((double)current_measure.Item2 / (double)16));
+
+                                notes.Add(D_NoteFactory.create_note(channelMessage.Data1, note_beats_measured));
+                                // Console.WriteLine(String.Format("Tellen: {0}", note_beats));
+                                // Console.WriteLine(String.Format("Tellen measured: {0}", note_beats_measured));
                             }
                         }
 
                         previous_midi_event = midiEvent;
-                        break;
-
+                    break;
                 }
             }
+
+            return notes;
+        }
+
+        private static D_Staff good_parseSequence(Sequence sequence)
+        {
+            D_Staff staff = new D_Staff();
+
+            set_tempo(sequence, staff);
+            set_measures(sequence, staff);
+            int ticks_per_beat = sequence.Division;
+            List<D_Note> notes = get_notes_from_track(sequence[1], staff, ticks_per_beat);
+
+            Console.WriteLine(String.Format("Ticks per beat: {0}", ticks_per_beat));
+            Console.WriteLine(String.Format("Tempo: {0}", staff.tempo));
 
             return staff;
         }
