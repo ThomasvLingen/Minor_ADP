@@ -16,7 +16,9 @@ namespace DPA_Musicsheets
                 note_alt.Item1,
                 beats,
                 get_octave(keycode),
-                note_alt.Item2
+                note_alt.Item2,
+                false,
+                has_length_modifier(beats)
             );
         }
 
@@ -29,6 +31,12 @@ namespace DPA_Musicsheets
                 NoteAlteration.none,
                 true
             );
+        }
+
+        private static List<int> valid_lengths = new List<int> { 1, 2, 4, 8, 16 };
+        private static bool has_length_modifier(int length)
+        {
+            return !valid_lengths.Contains(length);
         }
 
         // whether a sharp or a flat is returned is dependent on conventions
