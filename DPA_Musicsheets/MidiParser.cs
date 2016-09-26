@@ -83,11 +83,22 @@ namespace DPA_Musicsheets
                                 Tuple<int, int> current_measure = staff.getMeasure(previous_midi_event.AbsoluteTicks);
 
                                 double note_beats = ((double)midiEvent.AbsoluteTicks - (double)previous_midi_event.AbsoluteTicks) / (double)ticks_per_beat;
-                                int note_beats_measured = (int)(note_beats / ((double)current_measure.Item2 / (double)16));
+                                //int note_beats_measured = (int)(note_beats / ((double)current_measure.Item2 / (double)16));
+                                int note_beats_measured = (int)(note_beats * 4);
+                                // Console.WriteLine(String.Format("note_beats = {0} = (curTicks {1} - prevTicks {2}) / tpb {3}", note_beats, midiEvent.AbsoluteTicks, previous_midi_event.AbsoluteTicks, ticks_per_beat));
+                                // Console.WriteLine(String.Format("note_beats_measured = {0} = note_beats {1} / (beat {2} / 16)", note_beats_measured, note_beats, current_measure.Item2));
 
                                 notes.Add(D_NoteFactory.create_note(channelMessage.Data1, note_beats_measured));
                                 // Console.WriteLine(String.Format("Tellen: {0}", note_beats));
                                 // Console.WriteLine(String.Format("Tellen measured: {0}", note_beats_measured));
+                            }
+                            else if (channelMessage.Command.ToString() == "NoteOn" && channelMessage.Data2 == 90) {
+                                // Make rest
+                                if (midiEvent.DeltaTicks > 0) {
+                                    int note_beats = midiEvent.DeltaTicks / ticks_per_beat;
+                                    int note_beats_measured = (int)(note_beats * 4);
+                                    notes.Add(D_NoteFactory.create_rest(note_beats_measured));
+                                }
                             }
                         }
 
