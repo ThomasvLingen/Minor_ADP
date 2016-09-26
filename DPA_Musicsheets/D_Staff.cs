@@ -33,7 +33,7 @@ namespace DPA_Musicsheets
                 }
             }
 
-            if (!this.bars[current_bar_index].isFull()) {
+            if (!this.bars[this.bars.Count - 1].isFull()) {
                 throw new Exception("Last bar is not full!");
             }
         }
