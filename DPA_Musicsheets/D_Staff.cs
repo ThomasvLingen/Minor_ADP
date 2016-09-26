@@ -9,15 +9,38 @@ namespace DPA_Musicsheets
     public class D_Staff
     {
         public List<D_Bar> bars { get; private set; }
-        public List<Tuple<int, Tuple<int, int>>> measures { get; private set; }
+        public List<D_Measure> measures { get; private set; }
         public int tempo { get; set; }
+        public int num_of_beats { get; set; }
 
         public D_Staff()
         {
             this.bars = new List<D_Bar>();
-            this.measures = new List<Tuple<int, Tuple<int, int>>>();
+            this.measures = new List<D_Measure>();
             this.tempo = -1;
         }
+
+        //public static List<D_Bar> getBarsFromNotes(List<D_Note> notes)
+        //{
+        //    List<D_Bar> bars = new List<D_Bar>();
+
+        //    D_Bar bar_to_add = new D_Bar();
+        //    foreach (D_Note note in notes) {
+        //        bar_to_add.addNote(note);
+
+        //        if (bar_to_add.isFull()) {
+        //            bars.Add(bar_to_add);
+        //            bar_to_add = new D_Bar();
+        //        }
+        //    }
+
+        //    if (!bar_to_add.isFull()) {
+        //        throw new Exception("Last bar is not full!");
+        //    }
+
+        //    return bars;
+        //}
+
 
         public void addBar(D_Bar bar)
         {
@@ -29,26 +52,40 @@ namespace DPA_Musicsheets
             this.bars.Remove(bar);
         }
 
-        public void addMeasure(int time, int top, int bottom)
+        public void addMeasure(int top, int bottom, int start_beat, int end_beat)
         {
-            Tuple<int, int> measure = new Tuple<int, int>(top, bottom);
-            Tuple<int, Tuple<int, int>> timed_measure = new Tuple<int, Tuple<int, int>>(time, measure);
-
-            this.measures.Add(timed_measure);
+            this.measures.Add(new D_Measure(top, bottom, start_beat, end_beat));
         }
 
-        public Tuple<int, int> getMeasure(int time)
+        public void addMeasure(int top, int bottom, int start_beat)
         {
-            if (time > measures[measures.Count - 1].Item1 || measures.Count == 1) {
-                return measures[measures.Count - 1].Item2;
-            }
-            for(int i = 0; i < measures.Count; i++) {
-                if (time < measures[i+1].Item1) {
-                    return measures[i].Item2;
+            this.measures.Add(new D_Measure(top, bottom, start_beat));
+        }
+
+        public D_Measure getMeasure(int time)
+        {
+            foreach(D_Measure measure in this.measures) {
+                if (time >= measure.start_beat && time < measure.end_beat) {
+                    return measure;
                 }
             }
 
             return null;
+        }
+
+        public void setMeasureEndTimes()
+        {
+            int measure_index = 0;
+            int measure_end_index = this.measures.Count - 1;
+
+            while (measure_index != measure_end_index) {
+                if (measure_index != measure_end_index) {
+                    this.measures[measure_index].end_beat = this.measures[measure_index + 1].start_beat;
+                }
+                measure_index++;
+            }
+
+            this.measures[measure_end_index].end_beat = this.num_of_beats + 1;
         }
     }
 }

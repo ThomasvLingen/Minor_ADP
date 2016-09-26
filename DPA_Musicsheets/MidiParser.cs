@@ -57,9 +57,10 @@ namespace DPA_Musicsheets
                         if (metaMessage.MetaType == MetaType.TimeSignature) {
                             int top_number = meta_bytes[0];
                             int bottom_number = (int)(Math.Pow(2, meta_bytes[1]));
-                            int time_signature_event = midiEvent.AbsoluteTicks;
+                            int start_beat = midiEvent.AbsoluteTicks / sequence.Division;
 
-                            staff.addMeasure(time_signature_event, top_number, bottom_number);
+                            staff.addMeasure(top_number, bottom_number, start_beat);
+                            
                         }
 
                         break;
@@ -68,19 +69,55 @@ namespace DPA_Musicsheets
             }
         }
 
+        private static void set_num_of_beats(Sequence sequence, D_Staff staff)
+        {
+            Track track = sequence[1];
+
+            foreach (var midiEvent in track.Iterator()) {
+                switch (midiEvent.MidiMessage.MessageType) {
+                    case MessageType.Meta:
+                        var metaMessage = midiEvent.MidiMessage as MetaMessage;
+                        byte[] meta_bytes = metaMessage.GetBytes();
+
+                        // EndOfTrack
+                        if (metaMessage.MetaType == MetaType.EndOfTrack) {
+                            int beats = midiEvent.AbsoluteTicks / sequence.Division;
+
+                            staff.num_of_beats = beats;
+                        }
+
+                        break;
+                }
+
+            }
+        }
+
+        private static void make_bars(int ticks_per_beat, D_Staff staff)
+        {
+            //foreach(Tuple<int, Tuple<int,int>> timed_measure in staff.measures) {
+            //    int times = timed_measure.Item1 / timed_measure.Item2.Item1;
+            //    for(int index = 0; index < times; index++) {
+            //        staff.addBar(new D_Bar(timed_measure.Item2.Item1));
+            //    }
+            //}
+        }
+
         private static List<D_Note> get_notes_from_track(Track track, D_Staff staff, int ticks_per_beat)
         {
             List<D_Note> notes = new List<D_Note>();
+            int note_count = 0;
 
             MidiEvent previous_midi_event = null;
             foreach (var midiEvent in track.Iterator()) {
                 switch (midiEvent.MidiMessage.MessageType) {
                     case MessageType.Channel:
                         var channelMessage = midiEvent.MidiMessage as ChannelMessage;
+                        // Console.WriteLine(String.Format("keycode: {0} percentage thingy: {1}", channelMessage.Data1, channelMessage.Data2));
 
                         if (previous_midi_event != null) {
                             if (channelMessage.Command.ToString() == "NoteOn" && channelMessage.Data2 == 0) {
-                                Tuple<int, int> current_measure = staff.getMeasure(previous_midi_event.AbsoluteTicks);
+                                note_count++;
+                                // Tuple<int, int> current_measure = staff.getMeasure(previous_midi_event.AbsoluteTicks);
 
                                 double note_beats = ((double)midiEvent.AbsoluteTicks - (double)previous_midi_event.AbsoluteTicks) / (double)ticks_per_beat;
                                 //int note_beats_measured = (int)(note_beats / ((double)current_measure.Item2 / (double)16));
@@ -107,6 +144,12 @@ namespace DPA_Musicsheets
                 }
             }
 
+            int total_beats = 0;
+
+            foreach (D_Note note in notes) {
+                total_beats += note.length;
+            }
+
             return notes;
         }
 
@@ -117,7 +160,10 @@ namespace DPA_Musicsheets
             set_tempo(sequence, staff);
             set_measures(sequence, staff);
             int ticks_per_beat = sequence.Division;
+            set_num_of_beats(sequence, staff);
+            make_bars(ticks_per_beat, staff);
             List<D_Note> notes = get_notes_from_track(sequence[1], staff, ticks_per_beat);
+            // List<D_Bar> bars = D_Staff.getBarsFromNotes(notes);
 
             Console.WriteLine(String.Format("Ticks per beat: {0}", ticks_per_beat));
             Console.WriteLine(String.Format("Tempo: {0}", staff.tempo));

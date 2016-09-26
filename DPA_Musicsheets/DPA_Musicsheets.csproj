@@ -69,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="D_Bar.cs" />
+    <Compile Include="D_Measure.cs" />
     <Compile Include="D_NoteFactory.cs" />
     <Compile Include="MidiParser.cs" />
     <Compile Include="MidiTrack.cs" />
