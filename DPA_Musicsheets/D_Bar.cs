@@ -27,7 +27,7 @@ namespace DPA_Musicsheets
             this.notes.Remove(note);
         }
 
-        public bool isFull(int beats_in_bar)
+        public bool isFull()
         {
             int length_of_all_notes = 0;
 

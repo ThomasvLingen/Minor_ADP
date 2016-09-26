@@ -20,6 +20,24 @@ namespace DPA_Musicsheets
             this.tempo = -1;
         }
 
+        public void fillBarsWithNotes(List<D_Note> notes)
+        {
+            // Warning: this does not take notes into account that span multiple bars
+            int current_bar_index = 0;
+
+            foreach (D_Note note in notes) {
+                this.bars[current_bar_index].addNote(note);
+
+                if (this.bars[current_bar_index].isFull()) {
+                    current_bar_index++;
+                }
+            }
+
+            if (!this.bars[current_bar_index].isFull()) {
+                throw new Exception("Last bar is not full!");
+            }
+        }
+
         //public static List<D_Bar> getBarsFromNotes(List<D_Note> notes)
         //{
         //    List<D_Bar> bars = new List<D_Bar>();

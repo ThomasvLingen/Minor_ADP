@@ -166,7 +166,7 @@ namespace DPA_Musicsheets
             int ticks_per_beat = sequence.Division;
             make_bars(ticks_per_beat, staff);
             List<D_Note> notes = get_notes_from_track(sequence[1], staff, ticks_per_beat);
-            // List<D_Bar> bars = D_Staff.getBarsFromNotes(notes);
+            staff.fillBarsWithNotes(notes);
 
             Console.WriteLine(String.Format("Ticks per beat: {0}", ticks_per_beat));
             Console.WriteLine(String.Format("Tempo: {0}", staff.tempo));
