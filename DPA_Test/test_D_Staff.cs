@@ -42,7 +42,7 @@ namespace DPA_Test {
         }
 
         [Test]
-        public void TestSetMeasureEndTimes()
+        public void TestSetMeasureEndTimesStaff3Measures()
         {
             D_Staff staff = new D_Staff();
             staff.num_of_beats = 1000;
@@ -56,6 +56,18 @@ namespace DPA_Test {
             Assert.AreEqual(500, staff.measures[0].end_beat);
             Assert.AreEqual(750, staff.measures[1].end_beat);
             Assert.AreEqual(1001, staff.measures[2].end_beat);
+        }
+
+        [Test]
+        public void TestSetMeasureEndTimesStaff1Measure()
+        {
+            D_Staff staff = new D_Staff();
+            staff.num_of_beats = 1000;
+
+            staff.addMeasure(4, 4, 0);
+            staff.setMeasureEndTimes();
+
+            Assert.AreEqual(1001, staff.measures[0].end_beat);
         }
     }
 }
