@@ -28,5 +28,10 @@ namespace DPA_Musicsheets {
             this.beat_length = beat_length;
             this.start_beat = start_beat;
         }
+
+        public int getMeasureLengthInBeats()
+        {
+            return this.end_beat - this.start_beat;
+        }
     }
 }

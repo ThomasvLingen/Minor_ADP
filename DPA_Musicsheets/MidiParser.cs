@@ -97,12 +97,12 @@ namespace DPA_Musicsheets
 
         private static void make_bars(int ticks_per_beat, D_Staff staff)
         {
-            //foreach(Tuple<int, Tuple<int,int>> timed_measure in staff.measures) {
-            //    int times = timed_measure.Item1 / timed_measure.Item2.Item1;
-            //    for(int index = 0; index < times; index++) {
-            //        staff.addBar(new D_Bar(timed_measure.Item2.Item1));
-            //    }
-            //}
+            foreach (D_Measure measure in staff.measures) {
+                int times = measure.getMeasureLengthInBeats() / (measure.beats_per_bar / (measure.beat_length / 4));
+                for (int i = 0; i < times; i++) {
+                    staff.addBar(new D_Bar(measure.beats_per_bar / (measure.beat_length / 4)));
+                }
+            }
         }
 
         private static List<D_Note> get_notes_from_track(Track track, D_Staff staff, int ticks_per_beat)
