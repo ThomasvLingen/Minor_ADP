@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="525" Closing="Window_Closing">
     <Grid x:Name="MainGrid">
-        <TextBox x:Name="txt_MidiFilePath" HorizontalAlignment="Left" Height="23" Margin="90,10,0,0" TextWrapping="Wrap" Text="../../../smb1-Theme.mid" VerticalAlignment="Top" Width="233"/>
+        <TextBox x:Name="txt_MidiFilePath" HorizontalAlignment="Left" Height="23" Margin="90,10,0,0" TextWrapping="Wrap" Text="../../../Alle-eendjes-zwemmen-in-het-water.mid" VerticalAlignment="Top" Width="233"/>
         <Button x:Name="btnPlay" Content="Play" HorizontalAlignment="Left" Margin="353,11,0,0" VerticalAlignment="Top" Width="75" Click="btnPlay_Click"/>
         <Button x:Name="btnOpen" Content="Open" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="75" Click="btnOpen_Click"/>
         <Button x:Name="btn_Stop" Content="Stop" HorizontalAlignment="Left" Margin="433,11,0,0" VerticalAlignment="Top" Width="75" Click="btn_Stop_Click"/>
