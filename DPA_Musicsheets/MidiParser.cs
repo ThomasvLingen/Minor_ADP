@@ -44,6 +44,7 @@ namespace DPA_Musicsheets
 
         private static void set_measures(Sequence sequence, D_Staff staff)
         {
+            // This function requires staff.num_of_beats to be set!
             Track track = sequence[0];
 
             foreach (var midiEvent in track.Iterator()) {
@@ -67,6 +68,8 @@ namespace DPA_Musicsheets
                 }
 
             }
+
+            staff.setMeasureEndTimes();
         }
 
         private static void set_num_of_beats(Sequence sequence, D_Staff staff)
@@ -157,10 +160,10 @@ namespace DPA_Musicsheets
         {
             D_Staff staff = new D_Staff();
 
+            set_num_of_beats(sequence, staff);
             set_tempo(sequence, staff);
             set_measures(sequence, staff);
             int ticks_per_beat = sequence.Division;
-            set_num_of_beats(sequence, staff);
             make_bars(ticks_per_beat, staff);
             List<D_Note> notes = get_notes_from_track(sequence[1], staff, ticks_per_beat);
             // List<D_Bar> bars = D_Staff.getBarsFromNotes(notes);
