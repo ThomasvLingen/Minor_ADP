@@ -168,9 +168,6 @@ namespace DPA_Musicsheets
             List<D_Note> notes = get_notes_from_track(sequence[1], staff, ticks_per_beat);
             staff.fillBarsWithNotes(notes);
 
-            Console.WriteLine(String.Format("Ticks per beat: {0}", ticks_per_beat));
-            Console.WriteLine(String.Format("Tempo: {0}", staff.tempo));
-
             return staff;
         }
     }
