@@ -56,6 +56,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="test_D_Bar.cs" />
+    <Compile Include="test_D_Note.cs" />
     <Compile Include="test_D_NoteFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test_D_Staff.cs" />

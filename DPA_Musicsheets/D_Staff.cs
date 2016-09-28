@@ -26,15 +26,35 @@ namespace DPA_Musicsheets
             int current_bar_index = 0;
 
             foreach (D_Note note in notes) {
-                this.bars[current_bar_index].addNote(note);
+                if (current_bar_index == 29) {
+                    Console.WriteLine("YAY");
+                }
+
+                D_Note to_append = this.bars[current_bar_index].addNote(note);
+
+                if (to_append != null) {
+                    // overflow!
+                    current_bar_index++;
+                    D_Note please_dont_return = this.bars[current_bar_index].addNote(to_append);
+
+                    if (please_dont_return != null) {
+                        throw new Exception("Somehow there's a note that's longer than an entire bar. wot de fok");
+                    }
+                }
 
                 if (this.bars[current_bar_index].isFull()) {
                     current_bar_index++;
                 }
             }
 
+            if (!this.bars[this.bars.Count - 2].isFull()) {
+                throw new Exception("Second last bar is not full, something probablt went wrong here.");
+            }
+
             if (!this.bars[this.bars.Count - 1].isFull()) {
-                throw new Exception("Last bar is not full!");
+                // fill with rests
+                int to_fill = this.bars[current_bar_index].spaceLeft();
+                this.bars[current_bar_index].addNote(D_NoteFactory.create_rest(to_fill));
             }
         }
 

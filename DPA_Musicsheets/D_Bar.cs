@@ -17,9 +17,20 @@ namespace DPA_Musicsheets
             this.beats_in_bar = beats_in_bar;
         }
 
-        public void addNote(D_Note note)
+        // This returns a overflowed note if present
+        public D_Note addNote(D_Note note)
         {
-            this.notes.Add(note);
+            int overflow = note.length - this.spaceLeft();
+            if (overflow > 0) {
+                // split
+                Tuple<D_Note, D_Note> split_result = D_Note.splitNote(note, this.spaceLeft());
+
+                this.notes.Add(split_result.Item1);
+                return split_result.Item2;
+            } else {
+                this.notes.Add(note);
+                return null;
+            }
         }
 
         public void removeNote(D_Note note)
@@ -27,15 +38,32 @@ namespace DPA_Musicsheets
             this.notes.Remove(note);
         }
 
-        public bool isFull()
+        private int getLengthOfNotes()
         {
             int length_of_all_notes = 0;
 
-            foreach(D_Note note in this.notes) {
+            foreach (D_Note note in this.notes) {
                 length_of_all_notes += note.length;
             }
 
-            return length_of_all_notes >= beats_in_bar * 4;
+            return length_of_all_notes;
+        }
+
+        public bool isFull()
+        {
+            return this.getLengthOfNotes() >= this.getLengthSixteenthsInBar();
+        }
+
+        public int spaceLeft()
+        {
+            int length_of_all_notes = this.getLengthOfNotes();
+
+            return this.getLengthSixteenthsInBar() - length_of_all_notes;
+        }
+
+        private int getLengthSixteenthsInBar()
+        {
+            return this.beats_in_bar * 4;
         }
     }
 }

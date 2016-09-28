@@ -135,7 +135,7 @@ namespace DPA_Musicsheets
                             else if (channelMessage.Command.ToString() == "NoteOn" && channelMessage.Data2 == 90) {
                                 // Make rest
                                 if (midiEvent.DeltaTicks > 0) {
-                                    int note_beats = midiEvent.DeltaTicks / ticks_per_beat;
+                                    double note_beats = (double)midiEvent.DeltaTicks / (double)ticks_per_beat;
                                     int note_beats_measured = (int)(note_beats * 4);
                                     notes.Add(D_NoteFactory.create_rest(note_beats_measured));
                                 }
