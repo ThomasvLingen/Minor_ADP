@@ -33,6 +33,7 @@ namespace DPA_Musicsheets
         // Hierop gaan we audio streamen.
         // DeviceID 0 is je audio van je PC zelf.
         private OutputDevice _outputDevice = new OutputDevice(0);
+        D_Staff songData;
 
         public MainWindow()
         {
@@ -114,7 +115,7 @@ namespace DPA_Musicsheets
         private void btn_ShowContent_Click(object sender, RoutedEventArgs e)
         {
             ShowMidiTracks(MidiReader.ReadMidi(txt_MidiFilePath.Text));
-            MidiParser.parseMidi(txt_MidiFilePath.Text);
+            this.songData = MidiParser.parseMidi(txt_MidiFilePath.Text);
         }
 
         private void ShowMidiTracks(IEnumerable<MidiTrack> midiTracks)
