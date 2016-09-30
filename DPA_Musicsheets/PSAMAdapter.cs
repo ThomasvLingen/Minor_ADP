@@ -119,8 +119,6 @@ namespace DPA_Musicsheets {
                 return getRestMusicalSymbol(note);
             }
         }
-        
-
 
         static public MusicalSymbol fromMeasure(D_Measure measure)
         {
