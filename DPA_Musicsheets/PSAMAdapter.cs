@@ -81,17 +81,23 @@ namespace DPA_Musicsheets {
             return visual_length;
         }
 
+        static NoteStemDirection getStemDirection(int octave)
+        {
+            if (octave < 5) {
+                return NoteStemDirection.Up;
+            } else {
+                return NoteStemDirection.Down;
+            }
+        }
+
         static private MusicalSymbol getNoteMusicalSymbol(D_Note note)
         {
             String note_level = getNoteLevel(note.level);
             int note_alteration = getNoteAlteration(note.alteration);
             int octave = note.octave;
             int numberOfDots = getNumberOfDots(note.length_modifier);
-            if (note.length == 9 || note.length == 6) {
-                Console.WriteLine("Kut");
-            }
             MusicalSymbolDuration duration = getNoteDuration(getVisualLength(note.length, note.length_modifier));
-            NoteStemDirection direction = NoteStemDirection.Up;
+            NoteStemDirection direction = getStemDirection(note.octave);
             NoteTieType note_tie = getNoteTie(note.note_tie);
             List<NoteBeamType> note_beams = new List<NoteBeamType>() { NoteBeamType.Single };
 
