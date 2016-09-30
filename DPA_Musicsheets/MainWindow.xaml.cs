@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using PSAMControlLibrary;
+using PSAMWPFControlLibrary;
 using Sanford.Multimedia.Midi;
 using System;
 using System.Collections.Generic;
@@ -35,55 +36,64 @@ namespace DPA_Musicsheets
         private OutputDevice _outputDevice = new OutputDevice(0);
         D_Staff songData;
 
+        public ObservableCollection<PSAMWPFControlLibrary.IncipitViewerWPF> StaffViewers { get; set; } = new ObservableCollection<PSAMWPFControlLibrary.IncipitViewerWPF>();
+
+        //private void btn_Show_Click(object sender, RoutedEventArgs e)
+        //{
+        //    StaffViewers.Clear();
+        //    //var staff = PSAMStaff.BuildStaff(song.Tracks[0]);
+        //    //StaffViewers.Add(staff);
+        //    ListBoxViewer.ItemsSource = StaffViewers;
+        //    e.Handled = true;
+        //}
+
         public MainWindow()
         {
             this.MidiTracks = new ObservableCollection<MidiTrack>();
             InitializeComponent();
             DataContext = MidiTracks;
-            FillPSAMViewer();
             //notenbalk.LoadFromXmlFile("Resources/example.xml");
         }
 
-        private void FillPSAMViewer()
+        private IncipitViewerWPF getNewStaff()
         {
-            staff.ClearMusicalIncipit();
+            IncipitViewerWPF to_return = new IncipitViewerWPF();
 
-            // Clef = sleutel
-            staff.AddMusicalSymbol(new Clef(ClefType.GClef, 2));
-            staff.AddMusicalSymbol(new TimeSignature(TimeSignatureType.Numbers, 4, 4));
-            /* 
-                The first argument of Note constructor is a string representing one of the following names of steps: A, B, C, D, E, F, G. 
-                The second argument is number of sharps (positive number) or flats (negative number) where 0 means no alteration. 
-                The third argument is the number of an octave. 
-                The next arguments are: duration of the note, stem direction and type of tie (NoteTieType.None if the note is not tied). 
-                The last argument is a list of beams. If the note doesn't have any beams, it must still have that list with just one 
-                    element NoteBeamType.Single (even if duration of the note is greater than eighth). 
-                    To make it clear how beamlists work, let's try to add a group of two beamed sixteenths and eighth:
-                        Note s1 = new Note("A", 0, 4, MusicalSymbolDuration.Sixteenth, NoteStemDirection.Down, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Start, NoteBeamType.Start});
-                        Note s2 = new Note("C", 1, 5, MusicalSymbolDuration.Sixteenth, NoteStemDirection.Down, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Continue, NoteBeamType.End });
-                        Note e = new Note("D", 0, 5, MusicalSymbolDuration.Eighth, NoteStemDirection.Down, NoteTieType.None,new List<NoteBeamType>() { NoteBeamType.End });
-                        viewer.AddMusicalSymbol(s1);
-                        viewer.AddMusicalSymbol(s2);
-                        viewer.AddMusicalSymbol(e); 
-            */
+            to_return.AddMusicalSymbol(new Clef(ClefType.GClef, 2));
+            to_return.Width = 525;
+            to_return.Height = 120;
+            to_return.HorizontalAlignment = HorizontalAlignment.Left;
+            to_return.VerticalAlignment = VerticalAlignment.Center;
+            to_return.VerticalContentAlignment = VerticalAlignment.Center;
 
-            staff.AddMusicalSymbol(new Note("A", 0, 4, MusicalSymbolDuration.Sixteenth, NoteStemDirection.Down, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Start, NoteBeamType.Start }));
-            staff.AddMusicalSymbol(new Note("C", 1, 5, MusicalSymbolDuration.Sixteenth, NoteStemDirection.Down, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Continue, NoteBeamType.End }));
-            staff.AddMusicalSymbol(new Note("D", 0, 5, MusicalSymbolDuration.Eighth, NoteStemDirection.Down, NoteTieType.Start, new List<NoteBeamType>() { NoteBeamType.End }));
-            staff.AddMusicalSymbol(new Barline());
+            return to_return;
+        }
 
-            staff.AddMusicalSymbol(new Note("D", 0, 5, MusicalSymbolDuration.Whole, NoteStemDirection.Down, NoteTieType.Stop, new List<NoteBeamType>() { NoteBeamType.Single }));
-            staff.AddMusicalSymbol(new Note("E", 0, 4, MusicalSymbolDuration.Quarter, NoteStemDirection.Up, NoteTieType.Start, new List<NoteBeamType>() { NoteBeamType.Single }) { NumberOfDots = 1 });
-            staff.AddMusicalSymbol(new Barline());
+        private void updatePSAMWithSongData()
+        {
+            IncipitViewerWPF temp_staff = getNewStaff();
+            
+            int bar_count = 0;
+            foreach(D_Bar bar in this.songData.bars) {
+                bar_count++;
+                foreach(D_Note note in bar.notes) {
+                    temp_staff.AddMusicalSymbol(PSAMAdapter.fromNote(note));
+                }
 
-            staff.AddMusicalSymbol(new Note("C", 0, 4, MusicalSymbolDuration.Half, NoteStemDirection.Up, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Single }));
-            staff.AddMusicalSymbol(
-                new Note("E", 0, 4, MusicalSymbolDuration.Half, NoteStemDirection.Up, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Single })
-                { IsChordElement = true });
-            staff.AddMusicalSymbol(
-                new Note("G", 0, 4, MusicalSymbolDuration.Half, NoteStemDirection.Up, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Single })
-                { IsChordElement = true });
-            staff.AddMusicalSymbol(new Barline());
+                if(bar_count == 4) {
+                    StaffViewers.Add(temp_staff);
+                    temp_staff = getNewStaff();
+                    bar_count = 0;
+                }
+
+                temp_staff.AddMusicalSymbol(new Barline());
+            }
+
+            if (bar_count < 4) {
+                StaffViewers.Add(temp_staff);
+            }
+
+            ListBoxViewer.ItemsSource = StaffViewers;
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
@@ -116,6 +126,7 @@ namespace DPA_Musicsheets
         {
             ShowMidiTracks(MidiReader.ReadMidi(txt_MidiFilePath.Text));
             this.songData = MidiParser.parseMidi(txt_MidiFilePath.Text);
+            this.updatePSAMWithSongData();
         }
 
         private void ShowMidiTracks(IEnumerable<MidiTrack> midiTracks)

@@ -6,13 +6,25 @@
         xmlns:PSAMWPFControl="clr-namespace:PSAMWPFControlLibrary;assembly=PSAMWPFControlLibrary"
         xmlns:local="clr-namespace:DPA_Musicsheets"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="525" Closing="Window_Closing">
+        Title="MainWindow" Height="750" Width="525" Closing="Window_Closing">
     <Grid x:Name="MainGrid">
         <TextBox x:Name="txt_MidiFilePath" HorizontalAlignment="Left" Height="23" Margin="90,10,0,0" TextWrapping="Wrap" Text="../../../Twee-emmertjes-water-halen.mid" VerticalAlignment="Top" Width="233"/>
         <Button x:Name="btnPlay" Content="Play" HorizontalAlignment="Left" Margin="353,11,0,0" VerticalAlignment="Top" Width="75" Click="btnPlay_Click"/>
         <Button x:Name="btnOpen" Content="Open" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="75" Click="btnOpen_Click"/>
         <Button x:Name="btn_Stop" Content="Stop" HorizontalAlignment="Left" Margin="433,11,0,0" VerticalAlignment="Top" Width="75" Click="btn_Stop_Click"/>
         <Button x:Name="btn_ShowContent" Content="Show content" HorizontalAlignment="Left" Margin="353,35,0,0" VerticalAlignment="Top" Width="155" Click="btn_ShowContent_Click"/>
+
+        <ListBox ItemsSource="{Binding StaffViewers}" Height="360" Width="Auto" VerticalAlignment="Bottom" x:Name="ListBoxViewer">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <ContentControl Content="{Binding}" Width="525" Height="120" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <!--<PSAMWPFControl:IncipitViewerWPF HorizontalAlignment="Left" Visibility="Visible" Margin="0,300,0,0" Width="525" x:Name="staff" />-->
+                        </ContentControl>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <TabControl x:Name="tabCtrl_MidiContent" HorizontalAlignment="Left" Height="227" Margin="10,59,0,0" VerticalAlignment="Top" Width="498" ItemsSource="{Binding}">
             <TabControl.ItemContainerStyle>
@@ -36,7 +48,7 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
-        <PSAMWPFControl:IncipitViewerWPF HorizontalAlignment="Left" Margin="0,300,0,0" Width="525" x:Name="staff" >
-        </PSAMWPFControl:IncipitViewerWPF>
+        <!--<PSAMWPFControl:IncipitViewerWPF HorizontalAlignment="Left" Margin="0,300,0,0" Width="525" x:Name="staff" >-->
+        <!--</PSAMWPFControl:IncipitViewerWPF>-->
     </Grid>
 </Window>

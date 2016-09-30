@@ -17,9 +17,13 @@ namespace DPA_Musicsheets
                 beats,
                 get_octave(keycode),
                 note_alt.Item2,
-                false,
-                has_length_modifier(beats)
+                false
             );
+        }
+
+        public static D_Note create_note(D_Note other, int new_length)
+        {
+            return new D_Note(other, new_length);
         }
 
         public static D_Note create_rest(int beats)
@@ -31,12 +35,6 @@ namespace DPA_Musicsheets
                 NoteAlteration.none,
                 true
             );
-        }
-
-        private static List<int> valid_lengths = new List<int> { 1, 2, 4, 8, 16 };
-        private static bool has_length_modifier(int length)
-        {
-            return !valid_lengths.Contains(length);
         }
 
         // whether a sharp or a flat is returned is dependent on conventions

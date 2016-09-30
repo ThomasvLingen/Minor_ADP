@@ -74,6 +74,7 @@
     <Compile Include="MidiParser.cs" />
     <Compile Include="MidiTrack.cs" />
     <Compile Include="D_Staff.cs" />
+    <Compile Include="PSAMAdapter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
