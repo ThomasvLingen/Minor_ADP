@@ -74,8 +74,13 @@ namespace DPA_Musicsheets
             IncipitViewerWPF temp_staff = getNewStaff();
             
             int bar_count = 0;
+            D_Measure previous_bar_measure = null;
             foreach(D_Bar bar in this.songData.bars) {
                 bar_count++;
+                if (bar.measure != previous_bar_measure) {
+                    temp_staff.AddMusicalSymbol(PSAMAdapter.fromMeasure(bar.measure));
+                }
+
                 foreach(D_Note note in bar.notes) {
                     temp_staff.AddMusicalSymbol(PSAMAdapter.fromNote(note));
                 }
@@ -87,6 +92,7 @@ namespace DPA_Musicsheets
                 }
 
                 temp_staff.AddMusicalSymbol(new Barline());
+                previous_bar_measure = bar.measure;
             }
 
             if (bar_count < 4) {

@@ -100,7 +100,9 @@ namespace DPA_Musicsheets
             foreach (D_Measure measure in staff.measures) {
                 int times = measure.getMeasureLengthInBeats() / (measure.beats_per_bar / (measure.beat_length / 4));
                 for (int i = 0; i < times; i++) {
-                    staff.addBar(new D_Bar(measure.beats_per_bar / (measure.beat_length / 4)));
+                    D_Bar to_add = new D_Bar(measure.beats_per_bar / (measure.beat_length / 4));
+                    to_add.measure = measure;
+                    staff.addBar(to_add);
                 }
             }
         }

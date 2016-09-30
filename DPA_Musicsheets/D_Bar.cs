@@ -10,6 +10,7 @@ namespace DPA_Musicsheets
     {
         public List<D_Note> notes { get; private set; }
         private int beats_in_bar = -1;
+        public D_Measure measure { get; set; }
 
         public D_Bar(int beats_in_bar)
         {

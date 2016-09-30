@@ -119,5 +119,12 @@ namespace DPA_Musicsheets {
                 return getRestMusicalSymbol(note);
             }
         }
+        
+
+
+        static public MusicalSymbol fromMeasure(D_Measure measure)
+        {
+            return new TimeSignature(TimeSignatureType.Numbers, (uint)measure.beats_per_bar, (uint)measure.beat_length);
+        }
     }
 }
