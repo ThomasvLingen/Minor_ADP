@@ -7,9 +7,20 @@ using Sanford.Multimedia.Midi;
 
 namespace DPA_Musicsheets
 {
-    class MidiParser
+    class MidiParser : MusicFileParser
     {
-        public static D_Staff parseMidi(string midiFileLocation)
+        static MidiParser instance;
+
+        public static MidiParser getInstance()
+        {
+            if (instance == null) {
+                instance = new MidiParser();
+            }
+
+            return instance;
+        }
+
+        public D_Staff parseFile(string midiFileLocation)
         {
             var sequence = new Sequence();
             sequence.Load(midiFileLocation);
