@@ -71,6 +71,7 @@
     <Compile Include="D_Bar.cs" />
     <Compile Include="D_Measure.cs" />
     <Compile Include="D_NoteFactory.cs" />
+    <Compile Include="LilypondParser.cs" />
     <Compile Include="MidiParser.cs" />
     <Compile Include="MidiTrack.cs" />
     <Compile Include="D_Staff.cs" />

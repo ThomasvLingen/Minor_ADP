@@ -110,15 +110,15 @@ namespace DPA_Musicsheets
             }
 
             _player = new MidiPlayer(_outputDevice);
-            _player.Play(txt_MidiFilePath.Text);
+            _player.Play(txt_SongFilePath.Text);
         }
 
         private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "Midi Files(.mid)|*.mid" };
+            OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "Midi Files(.mid)|*.mid|Lilypond files (.ly)|*.ly" };
             if (openFileDialog.ShowDialog() == true)
             {
-                txt_MidiFilePath.Text = openFileDialog.FileName;
+                txt_SongFilePath.Text = openFileDialog.FileName;
             }
         }
         
@@ -130,8 +130,22 @@ namespace DPA_Musicsheets
 
         private void btn_ShowContent_Click(object sender, RoutedEventArgs e)
         {
-            ShowMidiTracks(MidiReader.ReadMidi(txt_MidiFilePath.Text));
-            this.songData = MidiParser.getInstance().parseFile(txt_MidiFilePath.Text);
+            string filename = txt_SongFilePath.Text;
+            string extension = System.IO.Path.GetExtension(filename);
+
+            switch (extension) {
+                case ".midi":
+                    ShowMidiTracks(MidiReader.ReadMidi(filename));
+                    this.songData = MidiParser.getInstance().parseFile(filename);
+                break;
+                case ".ly":
+                    this.songData = LilypondParser.getInstance().parseFile(filename);
+                break;
+                default:
+                    Console.WriteLine("I can't parse " + extension);
+                break;
+            }
+
             this.updatePSAMWithSongData();
         }
 
