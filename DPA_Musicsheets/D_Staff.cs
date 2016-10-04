@@ -6,18 +6,26 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets
 {
+    public enum clef { g_key, f_key }
+
     public class D_Staff
     {
         public List<D_Bar> bars { get; private set; }
         public List<D_Measure> measures { get; private set; }
         public int tempo { get; set; }
         public int num_of_beats { get; set; }
+        public clef clef { get; set; }
 
         public D_Staff()
         {
             this.bars = new List<D_Bar>();
             this.measures = new List<D_Measure>();
             this.tempo = -1;
+        }
+
+        public void setNumOfBeats()
+        {
+            this.num_of_beats = getCurrentBeat();
         }
 
         public void fillBarsWithNotes(List<D_Note> notes)
@@ -100,10 +108,28 @@ namespace DPA_Musicsheets
             this.measures.Add(new D_Measure(top, bottom, start_beat));
         }
 
+        public void addMeasure(int top, int bottom)
+        {
+            int start_beat = this.getCurrentBeat();
+
+            this.addMeasure(top, bottom, start_beat);
+        }
+
+        private int getCurrentBeat()
+        {
+            int num_of_beats = 0;
+
+            foreach (D_Bar bar in this.bars) {
+                num_of_beats += bar.measure.beats_per_bar;
+            }
+
+            return num_of_beats;
+        }
+
         public D_Measure getMeasure(int time)
         {
             foreach(D_Measure measure in this.measures) {
-                if (time >= measure.start_beat && time < measure.end_beat) {
+                if (time >= measure.start_beat && time <= measure.end_beat) {
                     return measure;
                 }
             }
