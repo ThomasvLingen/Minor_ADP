@@ -29,6 +29,7 @@ namespace DPA_Musicsheets
             this.alteration         = alteration;
             this.is_rest            = is_rest;
             this.length_modifier    = has_length_modifier(length);
+            this.note_tie           = NoteTie.none;
         }
 
         public D_Note(NoteLevel level, int length, NoteTie note_tie = NoteTie.none, int octave = 1,
