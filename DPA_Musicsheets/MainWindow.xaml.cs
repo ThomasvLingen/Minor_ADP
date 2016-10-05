@@ -134,7 +134,7 @@ namespace DPA_Musicsheets
             string extension = System.IO.Path.GetExtension(filename);
 
             switch (extension) {
-                case ".midi":
+                case ".mid":
                     ShowMidiTracks(MidiReader.ReadMidi(filename));
                     this.songData = MidiParser.getInstance().parseFile(filename);
                 break;
