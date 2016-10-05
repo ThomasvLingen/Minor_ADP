@@ -33,7 +33,11 @@ namespace DPA_Musicsheets {
 
                 int octave = getNoteOctave(token, current_scope_octave);
 
-                return D_NoteFactory.create_note(noteLevel, alteration, octave, length_in_sixteenths);
+                D_Note new_note = D_NoteFactory.create_note(noteLevel, alteration, octave, length_in_sixteenths);
+                if(previous_note != null) {
+                    setRelativeOctave(new_note, previous_note);
+                }
+                return new_note;
             }
         }
 
@@ -53,6 +57,75 @@ namespace DPA_Musicsheets {
             int note_octave = LilypondParser.getNoteOctave(token);
 
             return note_octave + current_scope_octave;
+        }
+
+        private static void setRelativeOctave(D_Note new_note, D_Note old_note)
+        {
+            Tuple<int, bool> below, above;
+            below = findBelow(new_note, old_note);
+            above = findAbove(new_note, old_note);
+
+            if(below.Item1 > above.Item1) {
+                if(above.Item2) {
+                    new_note.octave++;
+                }
+            } else if(below.Item1 < above.Item1) {
+                if(below.Item2) {
+                    new_note.octave--;
+                }
+            } else {
+                if(below.Item1 == 0 && above.Item1 == 0) {
+                    return;
+                }
+                throw new Exception("7 is a even number?");
+            }
+        }
+
+        private static Dictionary<NoteLevel, int> noteLevelInt = new Dictionary<NoteLevel, int>() {
+                { NoteLevel.C, 1 },
+                { NoteLevel.D, 2 },
+                { NoteLevel.E, 3 },
+                { NoteLevel.F, 4 },
+                { NoteLevel.G, 5 },
+                { NoteLevel.A, 6 },
+                { NoteLevel.B, 7 }
+            };
+
+        private static Tuple<int, bool> findBelow(D_Note new_note, D_Note old_note)
+        {
+            int count = 0;
+            bool oct_change = false;
+            int int_old = noteLevelInt[old_note.level];
+            int int_new = noteLevelInt[new_note.level];
+
+            if (int_old > int_new) {
+                count += int_old - int_new;
+            }
+            else if (int_old < int_new) {
+                oct_change = true;
+                count += int_old;
+                count += noteLevelInt.Count - int_new;
+            }
+
+            return new Tuple<int, bool>(count, oct_change);
+        }
+
+        private static Tuple<int, bool> findAbove(D_Note new_note, D_Note old_note)
+        {
+            int count = 0;
+            bool oct_change = false;
+            int int_old = noteLevelInt[old_note.level];
+            int int_new = noteLevelInt[new_note.level];
+
+            if(int_old > int_new) {
+                oct_change = true;
+                count += noteLevelInt.Count - int_old;
+                count += int_new;
+            } else if (int_old < int_new) {
+                count += int_new - int_old;
+            }
+
+            return new Tuple<int, bool>(count, oct_change);
         }
     }
 }

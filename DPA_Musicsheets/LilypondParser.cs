@@ -43,7 +43,7 @@ namespace DPA_Musicsheets {
 
                 if (current_token == "\\relative") {
                     // +3 because we have to start from central c
-                    int scope_octave = 3 + getNoteOctave(tokens[current_token_index + 1]);
+                    int scope_octave = 2 + getNoteOctave(tokens[current_token_index + 1]);
                     int scope_begin_index = current_token_index + 3;
                     int scope_end_index = StringUtil.get_string_index("}", tokens, scope_begin_index) - 1;
                     List<string> scope_tokens = tokens.GetRange(scope_begin_index, scope_end_index - scope_begin_index);
@@ -99,11 +99,7 @@ namespace DPA_Musicsheets {
                 }
                 
                 else if (isNote(current_token)) {
-                    if (previous_note != null) {
-                        D_Note note = LilypondNoteParser.noteFromToken(current_token, current_scope_octave, previous_note);
-                    } else {
-
-                    }
+                    D_Note note = LilypondNoteParser.noteFromToken(current_token, current_scope_octave, previous_note);
 
                     if(!note.is_rest) {
                         current_scope_octave = note.octave;
@@ -117,7 +113,9 @@ namespace DPA_Musicsheets {
                     }
 
                     note_buffer.Add(note);
-                    previous_note = note;
+                    if(!note.is_rest) {
+                        previous_note = note;
+                    }
                 }
 
                 else if (current_token == "|") {

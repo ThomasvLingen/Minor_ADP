@@ -14,7 +14,7 @@ namespace DPA_Musicsheets
     {
         public bool is_rest { get; }
         public NoteLevel level { get; }
-        public int octave { get; }
+        public int octave { get; set; }
         public NoteAlteration alteration { get; }
         public int length { get; } // in 16th notes
         public bool length_modifier { get; }
