@@ -18,7 +18,7 @@ namespace DPA_Musicsheets {
             { 'r', NoteLevel.rest },
         }; 
 
-        public static D_Note noteFromToken(String token, int current_scope_octave)
+        public static D_Note noteFromToken(String token, int current_scope_octave, D_Note previous_note)
         {
             NoteLevel noteLevel = noteLevelDictionary[token[0]];
             int length_in_sixteenths = 16 / StringUtil.getNumberFromString(token);
@@ -30,7 +30,9 @@ namespace DPA_Musicsheets {
                 return D_NoteFactory.create_rest(length_in_sixteenths);
             } else {
                 NoteAlteration alteration = getNoteNoteAlteration(token);
+
                 int octave = getNoteOctave(token, current_scope_octave);
+
                 return D_NoteFactory.create_note(noteLevel, alteration, octave, length_in_sixteenths);
             }
         }

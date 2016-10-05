@@ -82,6 +82,7 @@ namespace DPA_Musicsheets {
             int token_end_index = tokens.Count - 1;
             List<D_Note> note_buffer = new List<D_Note>();
             int current_scope_octave = scope_octave;
+            D_Note previous_note = null;
 
             while (current_token_index <= token_end_index) {
                 string current_token = tokens[current_token_index];
@@ -98,7 +99,11 @@ namespace DPA_Musicsheets {
                 }
                 
                 else if (isNote(current_token)) {
-                    D_Note note = LilypondNoteParser.noteFromToken(current_token, current_scope_octave);
+                    if (previous_note != null) {
+                        D_Note note = LilypondNoteParser.noteFromToken(current_token, current_scope_octave, previous_note);
+                    } else {
+
+                    }
 
                     if(!note.is_rest) {
                         current_scope_octave = note.octave;
@@ -112,6 +117,7 @@ namespace DPA_Musicsheets {
                     }
 
                     note_buffer.Add(note);
+                    previous_note = note;
                 }
 
                 else if (current_token == "|") {
