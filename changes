@@ -26,11 +26,22 @@ Midiparser:
  - int total beats = useless : 165
  - parsesequence is een goede start voor de general lilypond en midi parser 
 
+Lilypond parser:
+ - parse lilypond tokens en parse lilypond scope doen veeeeel te veel (zie general lily en midi info voor oplossingen, opsplitsen van taken )
+ - Relative and absolute
+
+Lilypond note parser:
+ - Previous note shit is er gewoon in gehacked, niet persee verkeerd, maar moet nog naar worden gekeken
+ - 70 regels code voor bepalen relative octave (sorry getoccie)
+
+MainWindow.xalm.xaml.cs
+ - Veel oude code
+ - Veel code van martijn (herschrijven naar eigen standaard/arch)
+ - Grootte van de windows, staffs etc gelijk trekken, staat nu in meerdere files op andere manieren
+ - UpdatePSAMwithsongdata, functie is prima, maar hoort hij hier?
+
 General lilypond en midi parser
  - Zelfde volgorde aanhouden ook al betekend dit meerdere malen parsen
     - eerst staff maken met hierin bars en measures
     - daarna pas vullen met notes
  - Functies zoals (setnumBeats setTempo makeBars etc.) plaatsen in de music file parser parent, zodat midi en lilypond parser deze implementeren
-
-Nog te bespreken:
- - lilypond parser en lilypond note parser mainwindow.xaml.cs
