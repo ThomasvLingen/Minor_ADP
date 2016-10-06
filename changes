@@ -1,0 +1,36 @@
+D_staff:
+ - Remove comments
+ - Remove console.writeline : 37
+ - Ander design voor de addmeasures, momenteel 3 mogelijkheden voor add measure + de set endmeasures functie (verschil lilypond en midi)
+ - proberen om measures niet op te slaan in staff, (moeten zeker zijn dat measure niet veranderd midden in een bar)
+
+D_bar:
+ - addnote en addnoteNoOverflow dubbelop, twee verschillende manieren, minder denken vanuit lilypond en midi, een manier bedenken
+
+D_note:
+ - veeel te veel verschillende constructors
+ - opnieuw nadenken over get en setters + private public
+ - Eventueel rest en notes splitsen, laten overerven van een base class
+
+D_noteFactory:
+ - Constructer met keycode, dit is midi specifiek (moet dus weg of eventueel in conversie klasse) | keycode --> octave, level, alteration
+ - get_level_and_alteration is ook midi specifiek moet dus ergens anders heen (geld ook voor get_octave)
+
+D_measure:
+ - Eventueel start en end beat veranderingen, zie D_staff measure comments
+
+Midiparser:
+ - useless comments (soms oude code, soms niet meer relevante info)
+ - vaak (foreach midievent in track iterator)
+    - vaak zelfde code, hergebruik is minimaal
+ - int total beats = useless : 165
+ - parsesequence is een goede start voor de general lilypond en midi parser 
+
+General lilypond en midi parser
+ - Zelfde volgorde aanhouden ook al betekend dit meerdere malen parsen
+    - eerst staff maken met hierin bars en measures
+    - daarna pas vullen met notes
+ - Functies zoals (setnumBeats setTempo makeBars etc.) plaatsen in de music file parser parent, zodat midi en lilypond parser deze implementeren
+
+Nog te bespreken:
+ - lilypond parser en lilypond note parser mainwindow.xaml.cs
