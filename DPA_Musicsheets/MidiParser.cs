@@ -108,7 +108,7 @@ namespace DPA_Musicsheets
 
         private static void set_num_of_beats(Sequence sequence, D_Staff staff)
         {
-            // TimeSignature messages are in channel 0
+            // EndOfTrack messages are in channel 1
             List<Tuple<MidiEvent, MetaMessage>> meta_messages = getMetaMessages(sequence[1]);
 
             foreach (Tuple<MidiEvent, MetaMessage> metaPair in meta_messages) {
@@ -130,6 +130,7 @@ namespace DPA_Musicsheets
         {
             foreach (D_Measure measure in staff.measures) {
                 int times = measure.getMeasureLengthInBeats() / (measure.beats_per_bar / (measure.beat_length / 4));
+
                 for (int i = 0; i < times; i++) {
                     D_Bar to_add = new D_Bar(measure.beats_per_bar / (measure.beat_length / 4));
                     to_add.measure = measure;
@@ -168,7 +169,6 @@ namespace DPA_Musicsheets
         {
             if (channelMessage.Command.ToString() == "NoteOn" && channelMessage.Data2 == 0) {
                 // Make note
-
                 double note_beats = ((double)midiEvent.AbsoluteTicks - (double)previous_midi_event.AbsoluteTicks) / (double)ticks_per_beat;
                 int note_beats_measured = (int)(note_beats * 4);
 
