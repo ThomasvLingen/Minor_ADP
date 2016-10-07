@@ -29,6 +29,8 @@ namespace DPA_Musicsheets
 
         private void updatePSAMWithSongData()
         {
+            StaffViewers.Clear();
+
             IncipitViewerWPF temp_staff = IncipitViewerWPFWrapper.getWPFstaff(this.songData.clef);
             
             int bar_count = 0;
