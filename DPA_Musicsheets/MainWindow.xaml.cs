@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using PSAMControlLibrary;
 using PSAMWPFControlLibrary;
-using Sanford.Multimedia.Midi;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,13 +26,9 @@ namespace DPA_Musicsheets
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MidiPlayer _player;
+
         public ObservableCollection<MidiTrack> MidiTracks { get; private set; }
 
-        // De OutputDevice is een midi device of het midikanaal van je PC.
-        // Hierop gaan we audio streamen.
-        // DeviceID 0 is je audio van je PC zelf.
-        private OutputDevice _outputDevice = new OutputDevice(0);
         D_Staff songData;
 
         public ObservableCollection<IncipitViewerWPF> StaffViewers { get; set; } = new ObservableCollection<IncipitViewerWPF>();
@@ -80,13 +75,12 @@ namespace DPA_Musicsheets
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            if(_player != null)
-            {
-                _player.Dispose();
-            }
+            MidiPlayerWrapper.playMidi(txt_SongFilePath.Text);
+        }
 
-            _player = new MidiPlayer(_outputDevice);
-            _player.Play(txt_SongFilePath.Text);
+        private void btn_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            MidiPlayerWrapper.stopPlayMidi();
         }
 
         private void btnOpen_Click(object sender, RoutedEventArgs e)
@@ -98,12 +92,6 @@ namespace DPA_Musicsheets
             }
         }
         
-        private void btn_Stop_Click(object sender, RoutedEventArgs e)
-        {
-            if (_player != null)
-                _player.Dispose();
-        }
-
         private void btn_ShowContent_Click(object sender, RoutedEventArgs e)
         {
             string filename = txt_SongFilePath.Text;
@@ -138,11 +126,7 @@ namespace DPA_Musicsheets
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _outputDevice.Close();
-            if (_player != null)
-            {
-                _player.Dispose();
-            }
+            MidiPlayerWrapper.shutdownPlayer();
         }
     }
 }

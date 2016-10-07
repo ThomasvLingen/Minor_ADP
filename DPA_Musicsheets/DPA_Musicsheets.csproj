@@ -76,6 +76,7 @@
     <Compile Include="LilypondParser.cs" />
     <Compile Include="MidiNoteParser.cs" />
     <Compile Include="MidiParser.cs" />
+    <Compile Include="MidiPlayerWrapper.cs" />
     <Compile Include="MidiTrack.cs" />
     <Compile Include="D_Staff.cs" />
     <Compile Include="MusicFileParser.cs" />
