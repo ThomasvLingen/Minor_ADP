@@ -32,10 +32,10 @@ namespace DPA_Musicsheets {
 
         public static void shutdownPlayer()
         {
-            _outputDevice.Close();
             if (_player != null) {
                 _player.Dispose();
             }
+            _outputDevice.Close();
         }
     }
 }
