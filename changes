@@ -1,15 +1,15 @@
-D_staff:
+D_staff: (DONE)
  - Remove comments (DONE)
  - Remove console.writeline : 37 (DONE)
  - Ander design voor de addmeasures, momenteel 3 mogelijkheden voor add measure + de set endmeasures functie (verschil lilypond en midi) (DONE)
- - proberen om measures niet op te slaan in staff, (moeten zeker zijn dat measure niet veranderd midden in een bar)
+ - proberen om measures niet op te slaan in staff, (moeten zeker zijn dat measure niet veranderd midden in een bar) (KAN NIET)
 
 D_bar: (DONE)
  - addnote en addnoteNoOverflow dubbelop, twee verschillende manieren, minder denken vanuit lilypond en midi, een manier bedenken
 
 D_note:
- - veeel te veel verschillende constructors
- - opnieuw nadenken over get en setters + private public
+ - veeel te veel verschillende constructors (HEEFT_EEN_REDEN)
+ - opnieuw nadenken over get en setters + private public (KAN NIET)
  - Eventueel rest en notes splitsen, laten overerven van een base class
 
 D_noteFactory: (DONE)
