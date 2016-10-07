@@ -87,6 +87,19 @@ namespace DPA_Musicsheets
         //    return bars;
         //}
 
+        public void make_bars()
+        {
+            foreach (D_Measure measure in this.measures) {
+                int times = measure.getMeasureLengthInBeats() / (measure.beats_per_bar / (measure.beat_length / 4));
+
+                for (int i = 0; i < times; i++) {
+                    D_Bar to_add = new D_Bar(measure.beats_per_bar / (measure.beat_length / 4));
+                    to_add.measure = measure;
+                    this.addBar(to_add);
+                }
+            }
+        }
+
 
         public void addBar(D_Bar bar)
         {
