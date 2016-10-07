@@ -73,17 +73,17 @@ namespace DPA_Musicsheets
             ListBoxViewer.ItemsSource = StaffViewers;
         }
 
-        private void btnPlay_Click(object sender, RoutedEventArgs e)
+        private void btnPlayClick(object sender, RoutedEventArgs e)
         {
             MidiPlayerWrapper.playMidi(txt_SongFilePath.Text);
         }
 
-        private void btn_Stop_Click(object sender, RoutedEventArgs e)
+        private void btnStopClick(object sender, RoutedEventArgs e)
         {
             MidiPlayerWrapper.stopPlayMidi();
         }
 
-        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        private void btnOpenClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "All Music Files|*.mid;*.ly|Midi Files(.mid)|*.mid|Lilypond files (.ly)|*.ly" };
             if (openFileDialog.ShowDialog() == true)
@@ -92,14 +92,14 @@ namespace DPA_Musicsheets
             }
         }
         
-        private void btn_ShowContent_Click(object sender, RoutedEventArgs e)
+        private void btnShowContentClick(object sender, RoutedEventArgs e)
         {
             string filename = txt_SongFilePath.Text;
             string extension = System.IO.Path.GetExtension(filename);
 
             switch (extension) {
                 case ".mid":
-                    ShowMidiTracks(MidiReader.ReadMidi(filename));
+                    showMidiTracks(MidiReader.ReadMidi(filename));
                     this.songData = MidiParser.getInstance().parseFile(filename);
                 break;
                 case ".ly":
@@ -113,7 +113,7 @@ namespace DPA_Musicsheets
             this.updatePSAMWithSongData();
         }
 
-        private void ShowMidiTracks(IEnumerable<MidiTrack> midiTracks)
+        private void showMidiTracks(IEnumerable<MidiTrack> midiTracks)
         {
             MidiTracks.Clear();
             foreach (var midiTrack in midiTracks)
@@ -124,7 +124,7 @@ namespace DPA_Musicsheets
             tabCtrl_MidiContent.SelectedIndex = 0;
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void windowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MidiPlayerWrapper.shutdownPlayer();
         }
