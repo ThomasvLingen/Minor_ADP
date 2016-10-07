@@ -23,7 +23,7 @@ namespace DPA_Musicsheets {
 
             List<string> file_lines = new List<string>(System.IO.File.ReadAllLines(lilypondFilePath));
             List<string> tokens = this.getLilypondTokens(file_lines);
-            this.parseLilypondTokens(staff, tokens);
+            this.new_parseLilypondTokens(staff, tokens);
 
             return staff;
         }
@@ -32,6 +32,160 @@ namespace DPA_Musicsheets {
             { "treble", clef.g_key },
             { "bass", clef.f_key }
         };
+
+        private void set_num_of_beats(D_Staff staff, List<D_Note> notes, int current_scope_octave)
+        {
+            double num_of_beats = 0;
+
+            foreach(D_Note note in notes) {
+                num_of_beats += ((double)note.length / (double)4);
+            }
+
+            staff.num_of_beats = (int)num_of_beats;
+        }
+
+        private void set_tempo(D_Staff staff, List<string> tokens)
+        {
+            int current_token_index = 0;
+            int token_end_index = tokens.Count - 1;
+
+            while (current_token_index <= token_end_index) {
+                string current_token = tokens[current_token_index];
+
+                if (current_token == "\\tempo") {
+                    string tempo_arg = tokens[current_token_index + 1];
+
+                    staff.tempo = StringUtil.extractTempoFromLilypondString(tempo_arg);
+                    return;
+                }
+
+                current_token_index++;
+            }
+        }
+
+        private List<D_Note> get_notes(List<string> tokens, int current_scope_octave)
+        {
+            // This does not take into account repeats
+            int current_token_index = 0;
+            int token_end_index = tokens.Count - 1;
+            List<D_Note> notes = new List<D_Note>();
+            D_Note previous_note = null;
+
+            while (current_token_index <= token_end_index) {
+                string current_token = tokens[current_token_index];
+
+                // Special case, when we encounter \relative, skip a token
+                if (current_token == "\\relative") {
+                    current_token_index++;
+                }
+                else if (isNote(current_token)) {
+                    D_Note note = LilypondNoteParser.noteFromToken(current_token, current_scope_octave, previous_note);
+
+                    if (!note.is_rest) {
+                        current_scope_octave = note.octave;
+                    }
+
+                    if (current_token_index + 1 <= token_end_index && tokens[current_token_index + 1] == "~") {
+                        note.note_tie = NoteTie.start;
+                    }
+                    else if (current_token_index > 1 && tokens[current_token_index - 2] == "~") {
+                        note.note_tie = NoteTie.stop;
+                    }
+
+                    notes.Add(note);
+                    if (!note.is_rest) {
+                        previous_note = note;
+                    }
+                }
+
+                current_token_index++;
+            }
+
+            return notes;
+        }
+
+        private int get_relative_octave(List<string> tokens)
+        {
+            int current_token_index = 0;
+            int token_end_index = tokens.Count - 1;
+
+            while (current_token_index <= token_end_index) {
+                string current_token = tokens[current_token_index];
+
+                if (current_token == "\\relative") {
+                    // +3 because we have to start from central c
+                    int scope_octave = 2 + getNoteOctave(tokens[current_token_index + 1]);
+                    return scope_octave;
+                }
+            }
+
+            return -1;
+        }
+
+        private void set_measures(D_Staff staff, List<string> tokens)
+        {
+            // This function requires staff.num_of_beats to be set
+            int current_token_index = 0;
+            int token_end_index = tokens.Count - 1;
+            double current_beat = 0;
+
+            while (current_token_index <= token_end_index) {
+                string current_token = tokens[current_token_index];
+
+                // Special case, when we encounter \relative, skip a token
+                if (current_token == "\\relative") {
+                    current_token_index++;
+                }
+                else if (isNote(current_token)) {
+                    // We don't care about octaves here so we pass 0 and no previous note
+                    // All we care about is note length so that we may increase current_beat
+                    D_Note note = LilypondNoteParser.noteFromToken(current_token, 0, null);
+                    current_beat += ((double)note.length / (double)4);
+                }
+                else if (current_token == "\\time") {
+                    string time_signature = tokens[current_token_index + 1];
+                    Tuple<int, int> time_signature_tuple = StringUtil.getMeasureFromString(time_signature);
+                    staff.addMeasure(time_signature_tuple.Item1, time_signature_tuple.Item2, (int)current_beat);
+                }
+
+                current_token_index++;
+            }
+
+            staff.setMeasureEndTimes();
+        }
+
+        private void set_clef(D_Staff staff, List<string> tokens)
+        {
+            int current_token_index = 0;
+            int token_end_index = tokens.Count - 1;
+
+            while (current_token_index <= token_end_index) {
+                string current_token = tokens[current_token_index];
+
+                if (current_token == "\\clef") {
+                    string clef_type = tokens[current_token_index + 1];
+                    staff.clef = getClef(clef_type);
+                    return;
+                }
+
+                current_token_index++;
+            }
+        }
+
+        private D_Staff new_parseLilypondTokens(D_Staff staff, List<string> tokens)
+        {
+            int relative_octave = this.get_relative_octave(tokens);
+            List<D_Note> notes = this.get_notes(tokens, relative_octave);
+
+            this.set_clef(staff, tokens);
+            this.set_num_of_beats(staff, notes, relative_octave);
+            this.set_tempo(staff, tokens);
+            this.set_measures(staff, tokens);
+            staff.make_bars();
+            staff.fillBarsWithNotes(notes);
+
+            return staff;
+        }
 
         private void parseLilypondTokens(D_Staff staff, List<string> tokens)
         {

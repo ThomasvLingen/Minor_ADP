@@ -65,5 +65,12 @@ namespace DPA_Musicsheets {
 
             return 0;
         }
+
+        public static int extractTempoFromLilypondString(string tempo)
+        {
+            List<string> tempo_split = new List<string>(tempo.Split('='));
+
+            return Int32.Parse(tempo_split[1]);
+        }
     }
 }
