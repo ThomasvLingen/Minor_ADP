@@ -29,10 +29,6 @@ namespace DPA_Musicsheets
             int current_bar_index = 0;
 
             foreach (D_Note note in notes) {
-                if (current_bar_index == 29) {
-                    Console.WriteLine("YAY");
-                }
-
                 D_Note to_append = this.bars[current_bar_index].addNote(note);
 
                 if (to_append != null) {
