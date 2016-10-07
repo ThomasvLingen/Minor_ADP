@@ -36,42 +36,18 @@ namespace DPA_Musicsheets
         private OutputDevice _outputDevice = new OutputDevice(0);
         D_Staff songData;
 
-        public ObservableCollection<PSAMWPFControlLibrary.IncipitViewerWPF> StaffViewers { get; set; } = new ObservableCollection<PSAMWPFControlLibrary.IncipitViewerWPF>();
-
-        //private void btn_Show_Click(object sender, RoutedEventArgs e)
-        //{
-        //    StaffViewers.Clear();
-        //    //var staff = PSAMStaff.BuildStaff(song.Tracks[0]);
-        //    //StaffViewers.Add(staff);
-        //    ListBoxViewer.ItemsSource = StaffViewers;
-        //    e.Handled = true;
-        //}
+        public ObservableCollection<IncipitViewerWPF> StaffViewers { get; set; } = new ObservableCollection<IncipitViewerWPF>();
 
         public MainWindow()
         {
             this.MidiTracks = new ObservableCollection<MidiTrack>();
             InitializeComponent();
             DataContext = MidiTracks;
-            //notenbalk.LoadFromXmlFile("Resources/example.xml");
-        }
-
-        private IncipitViewerWPF getNewStaff()
-        {
-            IncipitViewerWPF to_return = new IncipitViewerWPF();
-
-            to_return.AddMusicalSymbol(new Clef(ClefType.GClef, 2));
-            to_return.Width = 525;
-            to_return.Height = 120;
-            to_return.HorizontalAlignment = HorizontalAlignment.Left;
-            to_return.VerticalAlignment = VerticalAlignment.Center;
-            to_return.VerticalContentAlignment = VerticalAlignment.Center;
-
-            return to_return;
         }
 
         private void updatePSAMWithSongData()
         {
-            IncipitViewerWPF temp_staff = getNewStaff();
+            IncipitViewerWPF temp_staff = IncipitViewerWPFWrapper.getWPFstaff(this.songData.clef);
             
             int bar_count = 0;
             D_Measure previous_bar_measure = null;
@@ -87,7 +63,7 @@ namespace DPA_Musicsheets
 
                 if(bar_count == 4) {
                     StaffViewers.Add(temp_staff);
-                    temp_staff = getNewStaff();
+                    temp_staff = IncipitViewerWPFWrapper.getWPFstaff(this.songData.clef);
                     bar_count = 0;
                 }
 

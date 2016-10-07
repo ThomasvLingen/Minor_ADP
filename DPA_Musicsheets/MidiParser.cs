@@ -177,6 +177,7 @@ namespace DPA_Musicsheets
         {
             D_Staff staff = new D_Staff();
 
+            staff.clef = clef.g_key;
             set_num_of_beats(sequence, staff);
             set_tempo(sequence, staff);
             set_measures(sequence, staff);

@@ -19,7 +19,6 @@
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
                         <ContentControl Content="{Binding}" Width="525" Height="120" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <!--<PSAMWPFControl:IncipitViewerWPF HorizontalAlignment="Left" Visibility="Visible" Margin="0,300,0,0" Width="525" x:Name="staff" />-->
                         </ContentControl>
                     </StackPanel>
                 </DataTemplate>
@@ -48,7 +47,5 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
-        <!--<PSAMWPFControl:IncipitViewerWPF HorizontalAlignment="Left" Margin="0,300,0,0" Width="525" x:Name="staff" >-->
-        <!--</PSAMWPFControl:IncipitViewerWPF>-->
     </Grid>
 </Window>
