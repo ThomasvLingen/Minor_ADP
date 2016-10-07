@@ -66,27 +66,6 @@ namespace DPA_Musicsheets
             }
         }
 
-        //public static List<D_Bar> getBarsFromNotes(List<D_Note> notes)
-        //{
-        //    List<D_Bar> bars = new List<D_Bar>();
-
-        //    D_Bar bar_to_add = new D_Bar();
-        //    foreach (D_Note note in notes) {
-        //        bar_to_add.addNote(note);
-
-        //        if (bar_to_add.isFull()) {
-        //            bars.Add(bar_to_add);
-        //            bar_to_add = new D_Bar();
-        //        }
-        //    }
-
-        //    if (!bar_to_add.isFull()) {
-        //        throw new Exception("Last bar is not full!");
-        //    }
-
-        //    return bars;
-        //}
-
         public void make_bars()
         {
             foreach (D_Measure measure in this.measures) {
