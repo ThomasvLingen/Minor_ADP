@@ -12,11 +12,6 @@ namespace DPA_Musicsheets
         private int beats_in_bar = -1;
         public D_Measure measure { get; set; }
 
-        public D_Bar()
-        {
-            notes = new List<D_Note>();
-        }
-
         public D_Bar(int beats_in_bar)
         {
             notes = new List<D_Note>();
@@ -37,11 +32,6 @@ namespace DPA_Musicsheets
                 this.notes.Add(note);
                 return null;
             }
-        }
-
-        public void addNoteNoOverflow(D_Note note)
-        {
-            this.notes.Add(note);
         }
 
         public void removeNote(D_Note note)

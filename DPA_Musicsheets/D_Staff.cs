@@ -23,11 +23,6 @@ namespace DPA_Musicsheets
             this.tempo = -1;
         }
 
-        public void setNumOfBeats()
-        {
-            this.num_of_beats = getCurrentBeat();
-        }
-
         public void fillBarsWithNotes(List<D_Note> notes)
         {
             // Warning: this does not take notes into account that span multiple bars
@@ -98,24 +93,6 @@ namespace DPA_Musicsheets
         public void addMeasure(int top, int bottom, int start_beat)
         {
             this.measures.Add(new D_Measure(top, bottom, start_beat));
-        }
-
-        public void addMeasure(int top, int bottom)
-        {
-            int start_beat = this.getCurrentBeat();
-
-            this.addMeasure(top, bottom, start_beat);
-        }
-
-        private int getCurrentBeat()
-        {
-            int num_of_beats = 0;
-
-            foreach (D_Bar bar in this.bars) {
-                num_of_beats += bar.measure.beats_per_bar;
-            }
-
-            return num_of_beats;
         }
 
         public D_Measure getMeasure(int time)
