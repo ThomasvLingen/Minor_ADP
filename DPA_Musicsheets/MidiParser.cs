@@ -126,7 +126,7 @@ namespace DPA_Musicsheets
             }
         }
 
-        private static void make_bars(int ticks_per_beat, D_Staff staff)
+        private static void make_bars(D_Staff staff)
         {
             foreach (D_Measure measure in staff.measures) {
                 int times = measure.getMeasureLengthInBeats() / (measure.beats_per_bar / (measure.beat_length / 4));
@@ -194,7 +194,7 @@ namespace DPA_Musicsheets
             set_tempo(sequence, staff);
             set_measures(sequence, staff);
             int ticks_per_beat = sequence.Division;
-            make_bars(ticks_per_beat, staff);
+            make_bars(staff);
             List<D_Note> notes = get_notes_from_track(sequence[1], staff, ticks_per_beat);
             staff.fillBarsWithNotes(notes);
 
