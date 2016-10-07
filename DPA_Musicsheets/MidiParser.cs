@@ -172,14 +172,14 @@ namespace DPA_Musicsheets
                 double note_beats = ((double)midiEvent.AbsoluteTicks - (double)previous_midi_event.AbsoluteTicks) / (double)ticks_per_beat;
                 int note_beats_measured = (int)(note_beats * 4);
 
-                return D_NoteFactory.create_note(channelMessage.Data1, note_beats_measured);
+                return MidiNoteParser.create_note(channelMessage.Data1, note_beats_measured);
             }
             else if (channelMessage.Command.ToString() == "NoteOn" && channelMessage.Data2 == 90) {
                 // Make rest
                 if (midiEvent.DeltaTicks > 0) {
                     double note_beats = (double)midiEvent.DeltaTicks / (double)ticks_per_beat;
                     int note_beats_measured = (int)(note_beats * 4);
-                    return D_NoteFactory.create_rest(note_beats_measured);
+                    return MidiNoteParser.create_rest(note_beats_measured);
                 }
             }
 

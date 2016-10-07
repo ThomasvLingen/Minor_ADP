@@ -12,7 +12,7 @@ D_note:
  - opnieuw nadenken over get en setters + private public
  - Eventueel rest en notes splitsen, laten overerven van een base class
 
-D_noteFactory:
+D_noteFactory: (DONE)
  - Constructer met keycode, dit is midi specifiek (moet dus weg of eventueel in conversie klasse) | keycode --> octave, level, alteration
  - get_level_and_alteration is ook midi specifiek moet dus ergens anders heen (geld ook voor get_octave)
 
