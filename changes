@@ -36,7 +36,7 @@ Lilypond note parser:
 
 MainWindow.xalm.xaml.cs
  - Veel oude code (DONE)
- - Veel code van martijn (herschrijven naar eigen standaard/arch)
+ - Veel code van martijn (herschrijven naar eigen standaard/arch) (DONE)
  - Grootte van de windows, staffs etc gelijk trekken, staat nu in meerdere files op andere manieren (DONE)
  - UpdatePSAMwithsongdata, functie is prima, maar hoort hij hier?
 
