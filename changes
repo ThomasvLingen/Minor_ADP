@@ -19,7 +19,7 @@ D_noteFactory:
 D_measure:
  - Eventueel start en end beat veranderingen, zie D_staff measure comments
 
-Midiparser:
+Midiparser: (DONE)
  - useless comments (soms oude code, soms niet meer relevante info)
  - vaak (foreach midievent in track iterator)
     - vaak zelfde code, hergebruik is minimaal
