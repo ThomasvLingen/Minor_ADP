@@ -68,19 +68,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="D_Bar.cs" />
-    <Compile Include="D_Measure.cs" />
-    <Compile Include="D_NoteFactory.cs" />
+    <Compile Include="Domain\D_Bar.cs" />
+    <Compile Include="Domain\D_Measure.cs" />
+    <Compile Include="Domain\D_NoteFactory.cs" />
     <Compile Include="IncipitViewerWPFWrapper.cs" />
-    <Compile Include="LilypondNoteParser.cs" />
-    <Compile Include="LilypondParser.cs" />
-    <Compile Include="MidiNoteParser.cs" />
-    <Compile Include="MidiParser.cs" />
+    <Compile Include="Parsers\LilypondNoteParser.cs" />
+    <Compile Include="Parsers\LilypondParser.cs" />
+    <Compile Include="Parsers\MidiNoteParser.cs" />
+    <Compile Include="Parsers\MidiParser.cs" />
     <Compile Include="MidiPlayerWrapper.cs" />
     <Compile Include="MidiTrack.cs" />
-    <Compile Include="D_Staff.cs" />
-    <Compile Include="MusicFileParser.cs" />
-    <Compile Include="PSAMAdapter.cs" />
+    <Compile Include="Domain\D_Staff.cs" />
+    <Compile Include="Parsers\MusicFileParser.cs" />
+    <Compile Include="Adapters\PSAMAdapter.cs" />
     <Compile Include="StringUtil.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -98,7 +98,7 @@
   <ItemGroup>
     <Compile Include="MidiPlayer.cs" />
     <Compile Include="MidiReader.cs" />
-    <Compile Include="D_Note.cs" />
+    <Compile Include="Domain\D_Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -126,6 +126,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
