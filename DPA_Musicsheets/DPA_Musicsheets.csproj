@@ -71,6 +71,8 @@
     <Compile Include="Domain\D_Bar.cs" />
     <Compile Include="Domain\D_Measure.cs" />
     <Compile Include="Domain\D_NoteFactory.cs" />
+    <Compile Include="Domain\D_Note.cs" />
+    <Compile Include="Editor.cs" />
     <Compile Include="IncipitViewerWPFWrapper.cs" />
     <Compile Include="Parsers\LilypondNoteParser.cs" />
     <Compile Include="Parsers\LilypondParser.cs" />
@@ -102,7 +104,6 @@
   <ItemGroup>
     <Compile Include="MidiPlayer.cs" />
     <Compile Include="MidiReader.cs" />
-    <Compile Include="Domain\D_Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,7 +131,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

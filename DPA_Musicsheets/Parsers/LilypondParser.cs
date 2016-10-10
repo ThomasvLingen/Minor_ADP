@@ -28,6 +28,17 @@ namespace DPA_Musicsheets {
             return staff;
         }
 
+        public D_Staff parseText(string lilypondFileContents)
+        {
+            D_Staff staff = new D_Staff();
+
+            List<string> file_lines = new List<string>(lilypondFileContents.Split('\n'));
+            List<string> tokens = this.getLilypondTokens(file_lines);
+            this.new_parseLilypondTokens(staff, tokens);
+
+            return staff;
+        }
+
         Dictionary<string, clef> lilypondClefToDomainClef = new Dictionary<string, clef> {
             { "treble", clef.g_key },
             { "bass", clef.f_key }

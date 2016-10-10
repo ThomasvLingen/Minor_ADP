@@ -18,6 +18,7 @@ namespace DPA_Musicsheets
         public ObservableCollection<MidiTrack> MidiTracks { get; private set; }
 
         D_Staff songData;
+        Editor editor;
         EditorStateManager manager = new EditorStateManager();
 
         public ObservableCollection<IncipitViewerWPF> StaffViewers { get; set; } = new ObservableCollection<IncipitViewerWPF>();
@@ -27,11 +28,29 @@ namespace DPA_Musicsheets
             this.MidiTracks = new ObservableCollection<MidiTrack>();
             InitializeComponent();
             DataContext = MidiTracks;
-            manager.state = new ChangesEditorState();
+            editor = new Editor(lilypondEditor, editorCallback);
+            lilypondEditor.TextChanged += new System.Windows.Controls.TextChangedEventHandler(editor.newChange);
+            manager.state = new NoChangesEditorState();
+        }
+
+        public void editorCallback()
+        {
+            try {
+                this.songData = LilypondParser.getInstance().parseText(editor.getText());
+                Dispatcher.Invoke(() => this.updatePSAMWithSongData());
+            } catch (Exception e) {
+                Console.WriteLine("NON VALID LILYPOND YOU MOTHERFUCKING LOSER");
+            }
+
+            this.manager.state = new ChangesEditorState();
         }
 
         private void updatePSAMWithSongData()
         {
+            if(this.songData == null) {
+                return;
+            }
+
             StaffViewers.Clear();
 
             IncipitViewerWPF temp_staff = IncipitViewerWPFWrapper.getWPFstaff(this.songData.clef);
@@ -95,7 +114,10 @@ namespace DPA_Musicsheets
                     this.songData = MidiParser.getInstance().parseFile(filename);
                 break;
                 case ".ly":
-                    this.songData = LilypondParser.getInstance().parseFile(filename);
+                    this.editor.enable();
+                    this.editor.setFileName(filename);
+                    this.editor.readFile();
+                    //this.songData = LilypondParser.getInstance().parseFile(filename);
                 break;
                 default:
                     Console.WriteLine("I can't parse " + extension);
