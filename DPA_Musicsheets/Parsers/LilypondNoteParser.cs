@@ -59,28 +59,6 @@ namespace DPA_Musicsheets {
             return note_octave + current_scope_octave;
         }
 
-        private static void setRelativeOctave(D_Note new_note, D_Note old_note)
-        {
-            Tuple<int, bool> below, above;
-            below = findBelow(new_note, old_note);
-            above = findAbove(new_note, old_note);
-
-            if(below.Item1 > above.Item1) {
-                if(above.Item2) {
-                    new_note.octave++;
-                }
-            } else if(below.Item1 < above.Item1) {
-                if(below.Item2) {
-                    new_note.octave--;
-                }
-            } else {
-                if(below.Item1 == 0 && above.Item1 == 0) {
-                    return;
-                }
-                throw new Exception("7 is a even number?");
-            }
-        }
-
         private static Dictionary<NoteLevel, int> noteLevelInt = new Dictionary<NoteLevel, int>() {
                 { NoteLevel.C, 1 },
                 { NoteLevel.D, 2 },
@@ -91,41 +69,28 @@ namespace DPA_Musicsheets {
                 { NoteLevel.B, 7 }
             };
 
-        private static Tuple<int, bool> findBelow(D_Note new_note, D_Note old_note)
+        private static void setRelativeOctave(D_Note new_note, D_Note old_note)
         {
-            int count = 0;
-            bool oct_change = false;
-            int int_old = noteLevelInt[old_note.level];
-            int int_new = noteLevelInt[new_note.level];
+            int step;
+            int i_old = noteLevelInt[old_note.level];
+            int i_new = noteLevelInt[new_note.level];
 
-            if (int_old > int_new) {
-                count += int_old - int_new;
-            }
-            else if (int_old < int_new) {
-                oct_change = true;
-                count += int_old;
-                count += noteLevelInt.Count - int_new;
-            }
+            if(i_old > i_new) {
+                step = 7 - i_old + i_new;
+            } else {
+                step = i_new - i_old;
+            } 
 
-            return new Tuple<int, bool>(count, oct_change);
-        }
-
-        private static Tuple<int, bool> findAbove(D_Note new_note, D_Note old_note)
-        {
-            int count = 0;
-            bool oct_change = false;
-            int int_old = noteLevelInt[old_note.level];
-            int int_new = noteLevelInt[new_note.level];
-
-            if(int_old > int_new) {
-                oct_change = true;
-                count += noteLevelInt.Count - int_old;
-                count += int_new;
-            } else if (int_old < int_new) {
-                count += int_new - int_old;
+            if (step > 3) {
+                step = step - 7;
             }
 
-            return new Tuple<int, bool>(count, oct_change);
+            if (step < 0 && i_old + step < 1) {
+                new_note.octave--;
+            }
+            else if (step > 0 && i_old + step > 7) {
+                new_note.octave++;
+            }
         }
     }
 }
