@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using DPA_Musicsheets.States;
 
 namespace DPA_Musicsheets
 {
@@ -17,6 +18,7 @@ namespace DPA_Musicsheets
         public ObservableCollection<MidiTrack> MidiTracks { get; private set; }
 
         D_Staff songData;
+        EditorStateManager manager = new EditorStateManager();
 
         public ObservableCollection<IncipitViewerWPF> StaffViewers { get; set; } = new ObservableCollection<IncipitViewerWPF>();
 
@@ -25,6 +27,7 @@ namespace DPA_Musicsheets
             this.MidiTracks = new ObservableCollection<MidiTrack>();
             InitializeComponent();
             DataContext = MidiTracks;
+            manager.state = new ChangesEditorState();
         }
 
         private void updatePSAMWithSongData()
@@ -116,6 +119,7 @@ namespace DPA_Musicsheets
         private void windowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MidiPlayerWrapper.shutdownPlayer();
+            this.manager.quit_callback();
         }
     }
 }
