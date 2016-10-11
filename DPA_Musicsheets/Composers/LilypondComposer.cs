@@ -79,6 +79,9 @@ namespace DPA_Musicsheets {
 
             foreach(D_Note note in notes) {
                 char note_level = noteLeveltoChar[note.level];
+
+                string note_alteration = ""; //place 'is' or 'es' or nothing depending on note.alteration
+
                 string octave_mod = ""; //TODO implement, use StringUtil.duplicateString
 
                 int note_length_int = (note.length_modifier) ? (int)((double)note.length / 1.5) : note.length;
@@ -87,7 +90,7 @@ namespace DPA_Musicsheets {
 
                 string length_mod = (note.length_modifier) ? "." : "";
 
-                lilypondString += String.Format("{0}{1}{2}{3} ", note_level, octave_mod, note_length, length_mod);
+                lilypondString += String.Format("{0}{1}{2}{3}{4} ", note_level, note_alteration ,octave_mod, note_length, length_mod);
             }
 
             return lilypondString;
