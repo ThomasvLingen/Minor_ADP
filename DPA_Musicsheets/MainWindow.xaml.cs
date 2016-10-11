@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using DPA_Musicsheets.States;
+using DPA_Musicsheets.Memento;
 
 namespace DPA_Musicsheets
 {
@@ -20,6 +21,7 @@ namespace DPA_Musicsheets
         D_Staff songData;
         Editor editor;
         EditorStateManager manager = new EditorStateManager();
+        EditorHistoryCaretaker editor_history;
 
         public ObservableCollection<IncipitViewerWPF> StaffViewers { get; set; } = new ObservableCollection<IncipitViewerWPF>();
 
@@ -31,6 +33,9 @@ namespace DPA_Musicsheets
             editor = new Editor(lilypondEditor, editorCallback);
             lilypondEditor.TextChanged += new System.Windows.Controls.TextChangedEventHandler(editor.newChange);
             manager.state = new NoChangesEditorState();
+            this.editor_history = new EditorHistoryCaretaker();
+
+            this.updateHistoryButtons();
         }
 
         public void editorCallback()
@@ -38,6 +43,9 @@ namespace DPA_Musicsheets
             try {
                 this.songData = LilypondParser.getInstance().parseText(editor.getText());
                 Dispatcher.Invoke(() => this.updatePSAMWithSongData());
+
+                this.editor_history.save(new EditorMemento(this.editor));
+                this.updateHistoryButtons();
             } catch (Exception e) {
                 Console.WriteLine("NON VALID LILYPOND YOU MOTHERFUCKING LOSER");
             }
@@ -142,6 +150,39 @@ namespace DPA_Musicsheets
         {
             MidiPlayerWrapper.shutdownPlayer();
             this.manager.quit_callback();
+        }
+
+        private void updateHistoryButtons()
+        {
+            this.btnRedo.Dispatcher.Invoke(() => {
+                this.btnRedo.IsEnabled = this.editor_history.canRedo();
+            });
+
+            this.btnUndo.Dispatcher.Invoke(() => {
+                this.btnUndo.IsEnabled = this.editor_history.canUndo();
+            });
+        }
+
+        private void btnRedoClick(object s, RoutedEventArgs e)
+        {
+            var redo_memento = this.editor_history.redo();
+
+            if (redo_memento != null) {
+                this.editor.restoreFromMemento(redo_memento);
+            }
+
+            this.updateHistoryButtons();
+        }
+
+        private void btnUndoClick(object s, RoutedEventArgs e)
+        {
+            var undo_memento = this.editor_history.undo();
+
+            if (undo_memento != null) {
+                this.editor.restoreFromMemento(undo_memento);
+            }
+
+            this.updateHistoryButtons();
         }
     }
 }

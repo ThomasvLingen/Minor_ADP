@@ -74,6 +74,9 @@
     <Compile Include="Domain\D_Note.cs" />
     <Compile Include="Editor.cs" />
     <Compile Include="IncipitViewerWPFWrapper.cs" />
+    <Compile Include="Memento\EditorHistoryCaretaker.cs" />
+    <Compile Include="Memento\EditorMemento.cs" />
+    <Compile Include="Memento\LinkedListExtensions.cs" />
     <Compile Include="Parsers\LilypondNoteParser.cs" />
     <Compile Include="Parsers\LilypondParser.cs" />
     <Compile Include="Parsers\MidiNoteParser.cs" />
