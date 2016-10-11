@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DPA_Musicsheets {
-    class MidiNoteParser {
+    public class MidiNoteParser {
 
         // whether a sharp or a flat is returned is dependent on conventions
         /* http://computermusicresource.com/midikeys.html 
