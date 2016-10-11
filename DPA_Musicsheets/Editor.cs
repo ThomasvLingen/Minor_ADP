@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Controls;
 using System.Windows;
+using DPA_Musicsheets.Memento;
 
 namespace DPA_Musicsheets {
     public class Editor {
@@ -23,6 +24,13 @@ namespace DPA_Musicsheets {
             this.idle_callback = idle_callback;
             tmr.Interval = 2000;
             tmr.Elapsed += new ElapsedEventHandler(timerCallBack);
+        }
+
+        public void setText(string text)
+        {
+            this.view.Dispatcher.Invoke(() => {
+                this.view.Text = text;
+            });
         }
 
         public string getText()
@@ -73,8 +81,13 @@ namespace DPA_Musicsheets {
         public void timerCallBack(object sender, EventArgs e)
         {
             tmr.Stop();
-            Console.WriteLine("FUCKie!");
+            // Console.WriteLine("FUCKie!");
             this.idle_callback();
+        }
+
+        public void restoreFromMemento(EditorMemento memento)
+        {
+            this.setText(memento.editor_contents);
         }
     }
 }
