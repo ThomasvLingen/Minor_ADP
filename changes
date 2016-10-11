@@ -1,34 +1,7 @@
-D_staff: (DONE)
- - Remove comments (DONE)
- - Remove console.writeline : 37 (DONE)
- - Ander design voor de addmeasures, momenteel 3 mogelijkheden voor add measure + de set endmeasures functie (verschil lilypond en midi) (DONE)
- - proberen om measures niet op te slaan in staff, (moeten zeker zijn dat measure niet veranderd midden in een bar) (KAN NIET)
-
-D_bar: (DONE)
- - addnote en addnoteNoOverflow dubbelop, twee verschillende manieren, minder denken vanuit lilypond en midi, een manier bedenken
-
 D_note:
  - veeel te veel verschillende constructors (HEEFT_EEN_REDEN)
  - opnieuw nadenken over get en setters + private public (KAN NIET)
  - Eventueel rest en notes splitsen, laten overerven van een base class
-
-D_noteFactory: (DONE)
- - Constructer met keycode, dit is midi specifiek (moet dus weg of eventueel in conversie klasse) | keycode --> octave, level, alteration
- - get_level_and_alteration is ook midi specifiek moet dus ergens anders heen (geld ook voor get_octave)
-
-D_measure: (DONE)
- - Eventueel start en end beat veranderingen, zie D_staff measure comments 
-
-Midiparser: (DONE)
- - useless comments (soms oude code, soms niet meer relevante info)
- - vaak (foreach midievent in track iterator)
-    - vaak zelfde code, hergebruik is minimaal
- - int total beats = useless : 165
- - parsesequence is een goede start voor de general lilypond en midi parser 
-
-Lilypond parser: (DONE)
- - parse lilypond tokens en parse lilypond scope doen veeeeel te veel (zie general lily en midi info voor oplossingen, opsplitsen van taken )
- - Relative and absolute
 
 Lilypond note parser:
  - Previous note shit is er gewoon in gehacked, niet persee verkeerd, maar moet nog naar worden gekeken
@@ -40,8 +13,8 @@ MainWindow.xalm.xaml.cs
  - Grootte van de windows, staffs etc gelijk trekken, staat nu in meerdere files op andere manieren (DONE)
  - UpdatePSAMwithsongdata, functie is prima, maar hoort hij hier?
 
-General lilypond en midi parser (DONE)
- - Zelfde volgorde aanhouden ook al betekend dit meerdere malen parsen (DONE)
-    - eerst staff maken met hierin bars en measures
-    - daarna pas vullen met notes
- - Functies zoals (setnumBeats setTempo makeBars etc.) plaatsen in de music file parser parent, zodat midi en lilypond parser deze implementeren (DONE)
+===============================================================================
+
+TODO:
+    Bookmarks with memento
+    Write domain staff to lilypond

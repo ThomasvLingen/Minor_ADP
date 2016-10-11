@@ -32,11 +32,7 @@ namespace DPA_Musicsheets {
         {
             D_Staff staff = new D_Staff();
 
-            List<string> file_lines = new List<string>(
-                lilypondFileContents.Split(
-                    new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries
-                )
-            );
+            List<string> file_lines = StringUtil.splitNewLines(lilypondFileContents);
             List<string> tokens = this.getLilypondTokens(file_lines);
             this.new_parseLilypondTokens(staff, tokens);
 

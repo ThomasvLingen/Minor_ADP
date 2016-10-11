@@ -72,5 +72,16 @@ namespace DPA_Musicsheets {
 
             return Int32.Parse(tempo_split[1]);
         }
+
+        public static List<string> splitNewLines(string to_split)
+        {
+            List<string> file_lines = new List<string>(
+                to_split.Split(
+                    new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries
+                )
+            );
+
+            return file_lines;
+        }
     }
 }
