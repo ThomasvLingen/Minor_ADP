@@ -83,5 +83,16 @@ namespace DPA_Musicsheets {
 
             return file_lines;
         }
+
+        public static string duplicateString(string toDuplicate, int times)
+        {
+            string return_string = toDuplicate;
+
+            for(int index = 0; index < times; index++) {
+                return_string += toDuplicate;
+            }
+
+            return return_string;
+        }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="test_D_NoteFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test_D_Staff.cs" />
+    <Compile Include="test_lilypondComposer.cs" />
     <Compile Include="test_MidiNoteParser.cs" />
   </ItemGroup>
   <ItemGroup>
