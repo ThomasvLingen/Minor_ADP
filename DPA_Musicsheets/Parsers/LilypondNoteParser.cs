@@ -69,6 +69,8 @@ namespace DPA_Musicsheets {
                 { NoteLevel.B, 7 }
             };
 
+
+        private static int max_index = 7;
         private static void setRelativeOctave(D_Note new_note, D_Note old_note)
         {
             int step;
@@ -76,19 +78,19 @@ namespace DPA_Musicsheets {
             int i_new = noteLevelInt[new_note.level];
 
             if(i_old > i_new) {
-                step = 7 - i_old + i_new;
+                step = max_index - i_old + i_new;
             } else {
                 step = i_new - i_old;
             } 
 
             if (step > 3) {
-                step = step - 7;
+                step = step - max_index;
             }
 
             if (step < 0 && i_old + step < 1) {
                 new_note.octave--;
             }
-            else if (step > 0 && i_old + step > 7) {
+            else if (step > 0 && i_old + step > max_index) {
                 new_note.octave++;
             }
         }
