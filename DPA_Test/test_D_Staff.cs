@@ -27,8 +27,8 @@ namespace DPA_Test {
 
             // 8,8 at 500
             test_measure = staff.getMeasure(500);
-            Assert.AreEqual(test_measure.beats_per_bar, 8);
-            Assert.AreEqual(test_measure.beat_length, 8);
+            Assert.AreEqual(test_measure.beats_per_bar, 4);
+            Assert.AreEqual(test_measure.beat_length, 4);
 
             // 8,8 at 750
             test_measure = staff.getMeasure(750);
