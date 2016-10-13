@@ -10,7 +10,7 @@ namespace DPA_Musicsheets.ChainOfResp {
     public class AddTrebleHandler : HotkeyHandler {
         private List<Key> hotkey = new List<Key>() {
             Key.LeftCtrl,
-            Key.C
+            Key.T
         };
 
         protected override bool shouldHandle(List<Key> keys_down)
