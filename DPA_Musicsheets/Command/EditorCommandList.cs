@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Command {
-    class EditorCommandList {
+    public class EditorCommandList {
         private Dictionary<string, EditorCommand> _commands;
         private Editor _target;
 
