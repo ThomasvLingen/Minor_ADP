@@ -124,7 +124,7 @@ namespace DPA_Musicsheets {
                 string current_token = tokens[current_token_index];
 
                 if (current_token == "\\relative") {
-                    // +3 because we have to start from central c
+                    // +2 because we have to start from central c
                     int scope_octave = 2 + getNoteOctave(tokens[current_token_index + 1]);
                     return scope_octave;
                 }
