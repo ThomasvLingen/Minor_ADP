@@ -102,7 +102,6 @@ namespace DPA_Musicsheets {
         public void timerCallBack(object sender, EventArgs e)
         {
             tmr.Stop();
-            // Console.WriteLine("FUCKie!");
             this.idle_callback();
         }
 
