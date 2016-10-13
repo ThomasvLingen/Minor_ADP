@@ -9,9 +9,6 @@ namespace DPA_Musicsheets.Command {
     public interface EditorCommand {
         string name { get; }
 
-        // Tuple structure:
-        // - currentSelection      (string)
-        // - currentSelectionIndex (int)
-        void execute(Editor editor, Tuple<string, int> parameters);
+        void execute(Editor editor, EditorCommandParameters parameters);
     }
 }

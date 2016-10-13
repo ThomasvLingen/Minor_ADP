@@ -71,6 +71,7 @@
     <Compile Include="Command\AddTrebleCommand.cs" />
     <Compile Include="Command\EditorCommand.cs" />
     <Compile Include="Command\EditorCommandList.cs" />
+    <Compile Include="Command\EditorCommandParameters.cs" />
     <Compile Include="Composers\LilypondComposer.cs" />
     <Compile Include="Domain\D_Bar.cs" />
     <Compile Include="Domain\D_Measure.cs" />

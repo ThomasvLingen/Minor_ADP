@@ -28,7 +28,7 @@ namespace DPA_Musicsheets.Command {
 
         public void executeCommand(string command_name)
         {
-            Tuple<string, int> parameters = new Tuple<string, int>(
+            EditorCommandParameters parameters = new EditorCommandParameters(
                 this._target.getCurrentSelection(),
                 this._target.getCurrentIndex()
             );
