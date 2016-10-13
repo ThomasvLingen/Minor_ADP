@@ -13,13 +13,15 @@ namespace DPA_Musicsheets {
     public class Editor {
 
         TextBox view;
+        TextBox open_file_view;
         Timer tmr = new Timer();
         String file_path = ".temp";
         Action idle_callback;
 
-        public Editor(TextBox textbox, Action idle_callback)
+        public Editor(TextBox editor_textbox, TextBox open_file_textbox, Action idle_callback)
         {
-            this.view = textbox;
+            this.view = editor_textbox;
+            this.open_file_view = open_file_textbox;
             this.view.IsEnabled = false;
             this.view.AcceptsReturn = true;
             this.idle_callback = idle_callback;
@@ -70,6 +72,16 @@ namespace DPA_Musicsheets {
         public void readFile()
         {
             this.view.Text = System.IO.File.ReadAllText(this.file_path);
+        }
+
+        public void openFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "All Music Files|*.mid;*.ly|Midi Files(.mid)|*.mid|Lilypond files (.ly)|*.ly" };
+            if (openFileDialog.ShowDialog() == true) {
+                this.open_file_view.Dispatcher.Invoke(() => {
+                    this.open_file_view.Text = openFileDialog.FileName;
+                });
+            }
         }
 
         public void saveFile()

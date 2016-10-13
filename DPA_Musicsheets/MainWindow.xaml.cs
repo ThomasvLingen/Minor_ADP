@@ -40,7 +40,7 @@ namespace DPA_Musicsheets
             this.MidiTracks = new ObservableCollection<MidiTrack>();
             this.DataContext = MidiTracks;
 
-            this.editor = new Editor(lilypondEditor, editorCallback);
+            this.editor = new Editor(lilypondEditor, txt_SongFilePath, editorCallback);
             this.editor_history = new EditorHistoryCaretaker();
             this.lilypondEditor.TextChanged += new System.Windows.Controls.TextChangedEventHandler(editor.newChange);
 
@@ -127,11 +127,7 @@ namespace DPA_Musicsheets
 
         private void btnOpenClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "All Music Files|*.mid;*.ly|Midi Files(.mid)|*.mid|Lilypond files (.ly)|*.ly" };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                txt_SongFilePath.Text = openFileDialog.FileName;
-            }
+            this.editor.openFile();
         }
         
         private void btnShowContentClick(object sender, RoutedEventArgs e)
