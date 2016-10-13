@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 using DPA_Musicsheets.States;
 using DPA_Musicsheets.Memento;
+using DPA_Musicsheets.Command;
 
 namespace DPA_Musicsheets
 {
@@ -22,7 +24,10 @@ namespace DPA_Musicsheets
         Editor editor;
         EditorStateManager manager = new EditorStateManager();
         EditorHistoryCaretaker editor_history;
+        EditorCommandList editor_commands;
         StaffView note_viewer;
+
+        private List<System.Windows.Input.Key> keys_down = new List<System.Windows.Input.Key>();
 
         bool undo_redo_pressed = false;
 
@@ -35,6 +40,7 @@ namespace DPA_Musicsheets
 
             this.editor = new Editor(lilypondEditor, editorCallback);
             this.editor_history = new EditorHistoryCaretaker();
+            this.editor_commands = new EditorCommandList(this.editor);
             this.lilypondEditor.TextChanged += new System.Windows.Controls.TextChangedEventHandler(editor.newChange);
 
             this.note_viewer = new StaffView(this.ListBoxViewer);
@@ -42,6 +48,20 @@ namespace DPA_Musicsheets
             this.manager.state = new NoChangesEditorState();
 
             this.updateHistoryButtons();
+        }
+
+        private void keydown_event(object sender, KeyEventArgs e)
+        {
+            this.keys_down.Add(e.Key);
+
+            if (this.keys_down.ContainsSameItems(new List<System.Windows.Input.Key>() { System.Windows.Input.Key.LeftCtrl })) {
+                this.editor_commands.executeCommand("add_treble");
+            }
+        }
+
+        private void keyup_event(object sender, KeyEventArgs e)
+        {
+            this.keys_down.Remove(e.Key);
         }
 
         public void editorCallback()

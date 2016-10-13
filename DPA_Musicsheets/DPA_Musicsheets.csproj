@@ -68,6 +68,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\AddTrebleCommand.cs" />
+    <Compile Include="Command\EditorCommand.cs" />
+    <Compile Include="Command\EditorCommandList.cs" />
     <Compile Include="Composers\LilypondComposer.cs" />
     <Compile Include="Domain\D_Bar.cs" />
     <Compile Include="Domain\D_Measure.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="Domain\D_Note.cs" />
     <Compile Include="Editor.cs" />
     <Compile Include="IncipitViewerWPFWrapper.cs" />
+    <Compile Include="ListExtensionMethods.cs" />
     <Compile Include="Memento\EditorHistoryCaretaker.cs" />
     <Compile Include="Memento\EditorMemento.cs" />
     <Compile Include="Memento\LinkedListExtensions.cs" />

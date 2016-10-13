@@ -6,6 +6,8 @@
         xmlns:PSAMWPFControl="clr-namespace:PSAMWPFControlLibrary;assembly=PSAMWPFControlLibrary"
         xmlns:local="clr-namespace:DPA_Musicsheets"
         mc:Ignorable="d"
+        KeyDown="keydown_event"
+        KeyUp="keyup_event"
         Title="MainWindow" Height="750" Width="1050" Closing="windowClosing">
     <Grid x:Name="MainGrid">
         <TextBox x:Name="txt_SongFilePath" HorizontalAlignment="Left" Height="23" Margin="90,10,0,0" TextWrapping="Wrap" Text="../../../Twee-emmertjes-water-halen.mid" VerticalAlignment="Top" Width="233"/>

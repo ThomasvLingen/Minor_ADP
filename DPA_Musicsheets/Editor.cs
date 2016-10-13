@@ -40,6 +40,20 @@ namespace DPA_Musicsheets {
             });
         }
 
+        public string getCurrentSelection()
+        {
+            return this.view.Dispatcher.Invoke(() => {
+                return this.view.SelectedText;
+            });
+        }
+
+        public int getCurrentIndex()
+        {
+            return this.view.Dispatcher.Invoke(() => {
+                return this.view.SelectionStart;
+            });
+        }
+
         public void setFileName(String file_path)
         {
             this.file_path = file_path;
