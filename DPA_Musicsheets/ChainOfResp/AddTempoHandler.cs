@@ -15,7 +15,6 @@ namespace DPA_Musicsheets.ChainOfResp {
 
         protected override bool shouldHandle(List<Key> keys_down)
         {
-            Console.WriteLine("foo");
             return keys_down.ContainsSameItems(this.hotkey);
         }
 
