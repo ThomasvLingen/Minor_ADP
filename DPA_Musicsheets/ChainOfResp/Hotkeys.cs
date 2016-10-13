@@ -29,6 +29,7 @@ namespace DPA_Musicsheets.ChainOfResp {
         private void _setupChain()
         {
             this._addToChain(new AddTrebleHandler());
+            this._addToChain(new AddTempoHandler());
         }
 
         private void _addToChain(HotkeyHandler handler)

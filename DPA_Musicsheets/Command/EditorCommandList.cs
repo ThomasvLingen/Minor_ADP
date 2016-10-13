@@ -22,7 +22,12 @@ namespace DPA_Musicsheets.Command {
 
             EditorCommand command;
 
-            command = new AddTrebleCommand();
+            this._addCommand(new AddTempoCommand());
+            this._addCommand(new AddTrebleCommand());
+        }
+
+        private void _addCommand(EditorCommand command)
+        {
             this._commands.Add(command.name, command);
         }
 

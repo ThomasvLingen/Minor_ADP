@@ -68,9 +68,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChainOfResp\AddTempoHandler.cs" />
     <Compile Include="ChainOfResp\AddTrebleHandler.cs" />
     <Compile Include="ChainOfResp\HotkeyHandler.cs" />
     <Compile Include="ChainOfResp\Hotkeys.cs" />
+    <Compile Include="Command\AddTempoCommand.cs" />
     <Compile Include="Command\AddTrebleCommand.cs" />
     <Compile Include="Command\EditorCommand.cs" />
     <Compile Include="Command\EditorCommandList.cs" />
