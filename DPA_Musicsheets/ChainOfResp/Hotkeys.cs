@@ -19,15 +19,18 @@ namespace DPA_Musicsheets.ChainOfResp {
             this._setupChain();
         }
 
-        public void keysPressed(List<Key> keys_down)
+        public bool keysPressed(List<Key> keys_down)
         {
             if (this._chain != null) {
-                this._chain.handle(keys_down, this._commands);
+                return this._chain.handle(keys_down, this._commands);
             }
+
+            return false;
         }
 
         private void _setupChain()
         {
+            this._addToChain(new SaveFileHandler());
             this._addToChain(new AddTrebleHandler());
             this._addToChain(new AddTempoHandler());
             this._addToChain(new AddTimeHandler_44());

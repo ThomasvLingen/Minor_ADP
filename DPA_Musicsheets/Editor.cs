@@ -7,6 +7,7 @@ using System.Timers;
 using System.Windows.Controls;
 using System.Windows;
 using DPA_Musicsheets.Memento;
+using Microsoft.Win32;
 
 namespace DPA_Musicsheets {
     public class Editor {
@@ -74,7 +75,15 @@ namespace DPA_Musicsheets {
         public void saveFile()
         {
             this.view.Dispatcher.Invoke(() => {
-                System.IO.File.WriteAllText(this.file_path, this.view.Text);
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "Lilypond music file|*.ly";
+                dialog.Title = "Save music";
+
+                dialog.ShowDialog();
+
+                if (dialog.FileName != "") {
+                    System.IO.File.WriteAllText(dialog.FileName, this.view.Text);
+                }
             });
         }
 

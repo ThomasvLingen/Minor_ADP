@@ -65,7 +65,10 @@ namespace DPA_Musicsheets
             }
             Console.WriteLine(to_print);
 
-            this.hotkeys.keysPressed(this.keys_down);
+            if (this.hotkeys.keysPressed(this.keys_down)) {
+                // If a hotkey was executed, clear keysdown
+                this.keys_down.Clear();
+            }
         }
 
         private void keyup_event(object sender, KeyEventArgs e)
