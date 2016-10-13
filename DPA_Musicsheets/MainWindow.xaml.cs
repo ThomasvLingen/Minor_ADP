@@ -9,6 +9,7 @@ using System.Windows.Input;
 using DPA_Musicsheets.States;
 using DPA_Musicsheets.Memento;
 using DPA_Musicsheets.Command;
+using DPA_Musicsheets.ChainOfResp;
 
 namespace DPA_Musicsheets
 {
@@ -24,7 +25,8 @@ namespace DPA_Musicsheets
         Editor editor;
         EditorStateManager manager = new EditorStateManager();
         EditorHistoryCaretaker editor_history;
-        EditorCommandList editor_commands;
+        Hotkeys hotkeys;
+        
         StaffView note_viewer;
 
         private List<System.Windows.Input.Key> keys_down = new List<System.Windows.Input.Key>();
@@ -40,8 +42,9 @@ namespace DPA_Musicsheets
 
             this.editor = new Editor(lilypondEditor, editorCallback);
             this.editor_history = new EditorHistoryCaretaker();
-            this.editor_commands = new EditorCommandList(this.editor);
             this.lilypondEditor.TextChanged += new System.Windows.Controls.TextChangedEventHandler(editor.newChange);
+
+            this.hotkeys = new Hotkeys(this.editor);
 
             this.note_viewer = new StaffView(this.ListBoxViewer);
 
@@ -54,9 +57,13 @@ namespace DPA_Musicsheets
         {
             this.keys_down.Add(e.Key);
 
-            if (this.keys_down.ContainsSameItems(new List<System.Windows.Input.Key>() { System.Windows.Input.Key.LeftCtrl })) {
-                this.editor_commands.executeCommand("add_treble");
+            string to_print = "";
+            foreach(System.Windows.Input.Key k in this.keys_down) {
+                to_print += k.ToString() + " ";
             }
+            Console.WriteLine(to_print);
+
+            this.hotkeys.keysPressed(this.keys_down);
         }
 
         private void keyup_event(object sender, KeyEventArgs e)
