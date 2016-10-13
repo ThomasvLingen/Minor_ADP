@@ -1,17 +1,6 @@
-D_note:
- - veeel te veel verschillende constructors (HEEFT_EEN_REDEN)
- - opnieuw nadenken over get en setters + private public (KAN NIET)
- - Eventueel rest en notes splitsen, laten overerven van een base class
-
 Lilypond note parser:
  - Previous note shit is er gewoon in gehacked, niet persee verkeerd, maar moet nog naar worden gekeken
- - 70 regels code voor bepalen relative octave (sorry getoccie)
-
-MainWindow.xalm.xaml.cs
- - Veel oude code (DONE)
- - Veel code van martijn (herschrijven naar eigen standaard/arch) (DONE)
- - Grootte van de windows, staffs etc gelijk trekken, staat nu in meerdere files op andere manieren (DONE)
- - UpdatePSAMwithsongdata, functie is prima, maar hoort hij hier?
+ - 70 regels code voor bepalen relative octave (sorry getoccie) (DONE)
 
 ===============================================================================
 

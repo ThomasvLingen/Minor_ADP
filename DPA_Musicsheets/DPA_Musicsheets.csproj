@@ -87,6 +87,7 @@
     <Compile Include="Domain\D_Staff.cs" />
     <Compile Include="Parsers\MusicFileParser.cs" />
     <Compile Include="Adapters\PSAMAdapter.cs" />
+    <Compile Include="StaffView.cs" />
     <Compile Include="States\ChangesEditorState.cs" />
     <Compile Include="States\EditorState.cs" />
     <Compile Include="States\EditorStateManager.cs" />

@@ -22,10 +22,9 @@ namespace DPA_Musicsheets
         Editor editor;
         EditorStateManager manager = new EditorStateManager();
         EditorHistoryCaretaker editor_history;
+        StaffView note_viewer;
 
         bool undo_redo_pressed = false;
-
-        public ObservableCollection<IncipitViewerWPF> StaffViewers { get; set; } = new ObservableCollection<IncipitViewerWPF>();
 
         public MainWindow()
         {
@@ -33,6 +32,7 @@ namespace DPA_Musicsheets
             InitializeComponent();
             DataContext = MidiTracks;
             editor = new Editor(lilypondEditor, editorCallback);
+            this.note_viewer = new StaffView(this.ListBoxViewer);
             lilypondEditor.TextChanged += new System.Windows.Controls.TextChangedEventHandler(editor.newChange);
             manager.state = new NoChangesEditorState();
             this.editor_history = new EditorHistoryCaretaker();
@@ -55,7 +55,7 @@ namespace DPA_Musicsheets
         {
             try {
                 this.songData = LilypondParser.getInstance().parseText(editor.getText());
-                Dispatcher.Invoke(() => this.updatePSAMWithSongData());
+                this.updateNoteViewer(); 
 
                 if (!undo_redo_pressed) {
                     this.editor_history.save(new EditorMemento(this.editor));
@@ -67,43 +67,11 @@ namespace DPA_Musicsheets
             }
         }
 
-        private void updatePSAMWithSongData()
+        private void updateNoteViewer()
         {
-            if(this.songData == null) {
-                return;
-            }
-
-            StaffViewers.Clear();
-
-            IncipitViewerWPF temp_staff = IncipitViewerWPFWrapper.getWPFstaff(this.songData.clef);
-            
-            int bar_count = 0;
-            D_Measure previous_bar_measure = null;
-            foreach(D_Bar bar in this.songData.bars) {
-                bar_count++;
-                if (bar.measure != previous_bar_measure) {
-                    temp_staff.AddMusicalSymbol(PSAMAdapter.fromMeasure(bar.measure));
-                }
-
-                foreach(D_Note note in bar.notes) {
-                    temp_staff.AddMusicalSymbol(PSAMAdapter.fromNote(note));
-                }
-
-                if(bar_count == 4) {
-                    StaffViewers.Add(temp_staff);
-                    temp_staff = IncipitViewerWPFWrapper.getWPFstaff(this.songData.clef);
-                    bar_count = 0;
-                }
-
-                temp_staff.AddMusicalSymbol(new Barline());
-                previous_bar_measure = bar.measure;
-            }
-
-            if (bar_count < 4) {
-                StaffViewers.Add(temp_staff);
-            }
-
-            ListBoxViewer.ItemsSource = StaffViewers;
+            Dispatcher.Invoke(() => {
+                this.note_viewer.updateView(this.songData);
+            });
         }
 
         private void btnPlayClick(object sender, RoutedEventArgs e)
@@ -146,7 +114,7 @@ namespace DPA_Musicsheets
                 break;
             }
 
-            this.updatePSAMWithSongData();
+            this.updateNoteViewer();
         }
 
         private void showMidiTracks(IEnumerable<MidiTrack> midiTracks)
