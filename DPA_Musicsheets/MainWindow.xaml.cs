@@ -28,14 +28,18 @@ namespace DPA_Musicsheets
 
         public MainWindow()
         {
-            this.MidiTracks = new ObservableCollection<MidiTrack>();
             InitializeComponent();
-            DataContext = MidiTracks;
-            editor = new Editor(lilypondEditor, editorCallback);
-            this.note_viewer = new StaffView(this.ListBoxViewer);
-            lilypondEditor.TextChanged += new System.Windows.Controls.TextChangedEventHandler(editor.newChange);
-            manager.state = new NoChangesEditorState();
+
+            this.MidiTracks = new ObservableCollection<MidiTrack>();
+            this.DataContext = MidiTracks;
+
+            this.editor = new Editor(lilypondEditor, editorCallback);
             this.editor_history = new EditorHistoryCaretaker();
+            this.lilypondEditor.TextChanged += new System.Windows.Controls.TextChangedEventHandler(editor.newChange);
+
+            this.note_viewer = new StaffView(this.ListBoxViewer);
+
+            this.manager.state = new NoChangesEditorState();
 
             this.updateHistoryButtons();
         }
@@ -63,7 +67,7 @@ namespace DPA_Musicsheets
 
                 this.updateHistoryButtons();
             } catch (Exception e) {
-                Console.WriteLine("NON VALID LILYPOND YOU MOTHERFUCKING LOSER");
+                Console.WriteLine("NON VALID LILYPOND YOU LOSER");
             }
         }
 
@@ -120,8 +124,8 @@ namespace DPA_Musicsheets
         private void showMidiTracks(IEnumerable<MidiTrack> midiTracks)
         {
             MidiTracks.Clear();
-            foreach (var midiTrack in midiTracks)
-            {
+
+            foreach (var midiTrack in midiTracks) {
                 MidiTracks.Add(midiTrack);
             }
 
