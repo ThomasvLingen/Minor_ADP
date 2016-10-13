@@ -21,6 +21,7 @@ namespace DPA_Musicsheets.Command {
             this._commands = new Dictionary<string, EditorCommand>();
 
             this._addCommand(new SaveFileCommand());
+            this._addCommand(new OpenFileCommand());
             this._addCommand(new AddTempoCommand());
             this._addCommand(new AddTrebleCommand());
             this._addCommand(new AddTimeCommand_44());

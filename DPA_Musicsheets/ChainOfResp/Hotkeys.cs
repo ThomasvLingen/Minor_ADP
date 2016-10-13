@@ -31,6 +31,7 @@ namespace DPA_Musicsheets.ChainOfResp {
         private void _setupChain()
         {
             this._addToChain(new SaveFileHandler());
+            this._addToChain(new OpenFileHandler());
             this._addToChain(new AddTrebleHandler());
             this._addToChain(new AddTempoHandler());
             this._addToChain(new AddTimeHandler_44());
