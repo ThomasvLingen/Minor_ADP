@@ -55,7 +55,9 @@ namespace DPA_Musicsheets
 
         private void keydown_event(object sender, KeyEventArgs e)
         {
-            this.keys_down.Add(e.Key);
+            if (!this.keys_down.Contains(this.getKey(e))) {
+                this.keys_down.Add(this.getKey(e));
+            }
 
             string to_print = "";
             foreach(System.Windows.Input.Key k in this.keys_down) {
@@ -68,7 +70,12 @@ namespace DPA_Musicsheets
 
         private void keyup_event(object sender, KeyEventArgs e)
         {
-            this.keys_down.Remove(e.Key);
+            this.keys_down.Remove(this.getKey(e));
+        }
+
+        private System.Windows.Input.Key getKey(KeyEventArgs e)
+        {
+            return (e.Key == System.Windows.Input.Key.System ? e.SystemKey : e.Key);
         }
 
         public void editorCallback()

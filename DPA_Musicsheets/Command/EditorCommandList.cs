@@ -24,6 +24,7 @@ namespace DPA_Musicsheets.Command {
 
             this._addCommand(new AddTempoCommand());
             this._addCommand(new AddTrebleCommand());
+            this._addCommand(new AddTimeCommand_44());
         }
 
         private void _addCommand(EditorCommand command)
