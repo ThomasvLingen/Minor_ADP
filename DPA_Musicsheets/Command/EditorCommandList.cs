@@ -37,6 +37,8 @@ namespace DPA_Musicsheets.Command {
             if (this._commands.TryGetValue(command_name, out command)) {
                 command.execute(this._target, parameters);
             }
+
+            this._target.setCurrentIndex(parameters.current_selection_index);
         }
     }
 }

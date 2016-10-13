@@ -47,6 +47,13 @@ namespace DPA_Musicsheets {
             });
         }
 
+        public void setCurrentIndex(int index)
+        {
+            this.view.Dispatcher.Invoke(() => {
+                this.view.SelectionStart = index;
+            });
+        }
+
         public int getCurrentIndex()
         {
             return this.view.Dispatcher.Invoke(() => {
