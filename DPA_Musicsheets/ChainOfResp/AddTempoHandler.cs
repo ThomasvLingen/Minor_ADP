@@ -9,7 +9,7 @@ using DPA_Musicsheets.Command;
 namespace DPA_Musicsheets.ChainOfResp {
     public class AddTempoHandler : HotkeyHandler {
         private List<Key> hotkey = new List<Key>() {
-            Key.LeftCtrl,
+            Key.LeftAlt,
             Key.S
         };
 

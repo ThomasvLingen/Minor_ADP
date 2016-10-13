@@ -9,8 +9,8 @@ using DPA_Musicsheets.Command;
 namespace DPA_Musicsheets.ChainOfResp {
     public class AddTrebleHandler : HotkeyHandler {
         private List<Key> hotkey = new List<Key>() {
-            Key.LeftCtrl,
-            Key.T
+            Key.LeftAlt,
+            Key.C
         };
 
         protected override bool shouldHandle(List<Key> keys_down)
