@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using DPA_Musicsheets;
+using DPA_Musicsheets.Composers;
 
 namespace DPA_Test {
     [Category("lilypondComposer")]
@@ -15,7 +16,23 @@ namespace DPA_Test {
             staff.addMeasure(2, 4, 0);
             D_Bar bar = new D_Bar(2);
             bar.addNote(new D_Note(NoteLevel.A, 1, 4));
+            bar.addNote(new D_Note(NoteLevel.B, 1, 4));
+            bar.addNote(new D_Note(NoteLevel.C, 1, 4));
+            bar.addNote(new D_Note(NoteLevel.D, 1, 4));
             staff.addBar(bar);
+
+            bar = new D_Bar(2);
+            bar.addNote(new D_Note(NoteLevel.E, 1, 4));
+            bar.addNote(new D_Note(NoteLevel.F, 1, 4));
+            bar.addNote(new D_Note(NoteLevel.G, 1, 4));
+            bar.addNote(new D_Note(NoteLevel.A, 1, 5));
+            staff.addBar(bar);
+
+            bar = new D_Bar(2);
+            bar.addNote(new D_Note(NoteLevel.B, 1, 5));
+            bar.addNote(new D_Note(NoteLevel.C, 1, 5));
+            staff.addBar(bar);
+
             Assert.AreEqual("\\relative c{\r\n\\clef treble\r\n\\tempo 4=120\r\n\\time 2/4\r\n", comp.composeLilypondFromStaff(staff));
         }
     }

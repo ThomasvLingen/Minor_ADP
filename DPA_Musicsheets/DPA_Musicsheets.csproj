@@ -78,6 +78,7 @@
     <Compile Include="Command\EditorCommandList.cs" />
     <Compile Include="Command\EditorCommandParameters.cs" />
     <Compile Include="Composers\LilypondComposer.cs" />
+    <Compile Include="Composers\LilypondNoteComposer.cs" />
     <Compile Include="Domain\D_Bar.cs" />
     <Compile Include="Domain\D_Measure.cs" />
     <Compile Include="Domain\D_NoteFactory.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Editor.cs" />
     <Compile Include="IncipitViewerWPFWrapper.cs" />
     <Compile Include="ListExtensionMethods.cs" />
+    <Compile Include="LilypondUtil.cs" />
     <Compile Include="Memento\EditorHistoryCaretaker.cs" />
     <Compile Include="Memento\EditorMemento.cs" />
     <Compile Include="Memento\LinkedListExtensions.cs" />
