@@ -20,11 +20,11 @@ namespace DPA_Musicsheets.Command {
         {
             this._commands = new Dictionary<string, EditorCommand>();
 
-            EditorCommand command;
-
             this._addCommand(new AddTempoCommand());
             this._addCommand(new AddTrebleCommand());
             this._addCommand(new AddTimeCommand_44());
+            this._addCommand(new AddTimeCommand_34());
+            this._addCommand(new AddTimeCommand_68());
         }
 
         private void _addCommand(EditorCommand command)
