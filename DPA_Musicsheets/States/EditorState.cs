@@ -5,7 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.States {
-    public interface EditorState {
-        void quit_callback();
+    public abstract class EditorState {
+        protected Editor _editor;
+
+        public EditorState(Editor editor)
+        {
+            this._editor = editor;
+        }
+
+        public abstract void quit_callback();
     }
 }

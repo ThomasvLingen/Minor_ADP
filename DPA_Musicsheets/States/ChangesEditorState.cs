@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows;
 
 namespace DPA_Musicsheets.States {
     class ChangesEditorState : EditorState {
-        public void quit_callback()
+        public ChangesEditorState(Editor editor) : base(editor)
         {
-            string message_box_text = "YOU SHOULD SAVE YOUR WORK, CHAP";
-            string caption = "HELLO";
 
-            MessageBoxButton button = MessageBoxButton.OK;
-            MessageBoxImage icon = MessageBoxImage.Warning;
+        }
 
-            MessageBox.Show(message_box_text, caption, button, icon);
+        public override void quit_callback()
+        {
+            DialogResult result = System.Windows.Forms.MessageBox.Show("Do you want to save your work?", "Maybe save?", MessageBoxButtons.YesNo);
 
-            Console.WriteLine("YOU SHOULD SAVE YOUR WORK, CHAP");
+            if (result == DialogResult.Yes) {
+                this._editor.saveFile();
+            }
         }
     }
 }

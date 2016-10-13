@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.States {
     class NoChangesEditorState : EditorState {
-        public void quit_callback()
+        public NoChangesEditorState(Editor editor) : base(editor)
+        {
+
+        }
+
+        public override void quit_callback()
         {
 
         }

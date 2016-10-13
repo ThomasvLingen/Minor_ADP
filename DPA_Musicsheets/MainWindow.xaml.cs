@@ -48,7 +48,7 @@ namespace DPA_Musicsheets
 
             this.note_viewer = new StaffView(this.ListBoxViewer);
 
-            this.manager.state = new NoChangesEditorState();
+            this.manager.state = new NoChangesEditorState(this.editor);
 
             this.updateHistoryButtons();
         }
@@ -89,7 +89,7 @@ namespace DPA_Musicsheets
                 this.undo_redo_pressed = false;
             }
 
-            this.manager.state = new ChangesEditorState();
+            this.manager.state = new ChangesEditorState(this.editor);
         }
 
         public void evaluate_editor_contents(bool undo_redo_pressed)
