@@ -20,6 +20,8 @@ namespace DPA_Musicsheets {
         String file_path = ".temp";
         Action idle_callback;
 
+        private string original_file_contents;
+
         public Editor(TextBox editor_textbox, TextBox open_file_textbox, Action idle_callback)
         {
             this.view = editor_textbox;
@@ -73,7 +75,16 @@ namespace DPA_Musicsheets {
 
         public void readFile()
         {
-            this.view.Text = System.IO.File.ReadAllText(this.file_path);
+            this.original_file_contents = File.ReadAllText(this.file_path);
+
+            this.view.Text = this.original_file_contents;
+        }
+
+        public bool isChangedFromOriginal()
+        {
+            return this.view.Dispatcher.Invoke(() => {
+                return this.view.Text != this.original_file_contents;
+            });
         }
 
         public void openFile()
