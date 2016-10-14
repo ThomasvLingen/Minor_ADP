@@ -23,6 +23,10 @@ namespace DPA_Musicsheets.Composers {
 
             lilypondString += String.Format("{0}{1}{2}{3}{4}", note_level, note_alteration, octave_mod, note_length, length_mod);
 
+            if(note.note_tie == NoteTie.start) {
+                lilypondString += " ~";
+            }
+
             return lilypondString;
         }
 
