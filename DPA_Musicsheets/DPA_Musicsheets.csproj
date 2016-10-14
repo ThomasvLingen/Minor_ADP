@@ -78,6 +78,7 @@
     <Compile Include="ChainOfResp\Hotkeys.cs" />
     <Compile Include="ChainOfResp\OpenFileHandler.cs" />
     <Compile Include="ChainOfResp\SaveFileHandler.cs" />
+    <Compile Include="ChainOfResp\SavePDFHandler.cs" />
     <Compile Include="Command\AddTempoCommand.cs" />
     <Compile Include="Command\AddTimeCommand_34.cs" />
     <Compile Include="Command\AddTimeCommand_44.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Command\EditorCommandParameters.cs" />
     <Compile Include="Command\OpenFileCommand.cs" />
     <Compile Include="Command\SaveFileCommand.cs" />
+    <Compile Include="Command\SavePDFCommand.cs" />
     <Compile Include="Composers\LilypondComposer.cs" />
     <Compile Include="Composers\LilypondNoteComposer.cs" />
     <Compile Include="Domain\D_Bar.cs" />
