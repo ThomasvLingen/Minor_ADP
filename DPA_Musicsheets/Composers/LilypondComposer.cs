@@ -81,6 +81,7 @@ namespace DPA_Musicsheets.Composers {
                 if (bar.measure != current_measure) {
                     current_measure = bar.measure;
                     composeMeasureInformation(current_measure, ref lilypondString);
+                    lilypondString += "  ";
                 }
 
                 foreach(D_Note note in bar.notes) {
