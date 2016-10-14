@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,16 +89,56 @@ namespace DPA_Musicsheets {
         public void saveFile()
         {
             this.view.Dispatcher.Invoke(() => {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.Filter = "Lilypond music file|*.ly";
-                dialog.Title = "Save music";
+                string filename = this.getSaveFilenameFromDialog("Lilypond music file|*.ly", "Save music");
 
-                dialog.ShowDialog();
-
-                if (dialog.FileName != "") {
-                    System.IO.File.WriteAllText(dialog.FileName, this.view.Text);
+                if (filename != "") {
+                    this.saveFile(filename);
                 }
             });
+        }
+
+        public string getSaveFilenameFromDialog(string filter, string title)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = filter;
+            dialog.Title = title;
+
+            dialog.ShowDialog();
+
+            return dialog.FileName;
+        }
+
+        public void saveFile(string filename)
+        {
+            this.view.Dispatcher.Invoke(() => {
+                if (filename != "") {
+                    System.IO.File.WriteAllText(filename, this.view.Text);
+                }
+            });
+        }
+
+        // This function assumes that `lilypond` is accessible from the command line
+        public void saveToPDF()
+        {
+            string tmp_source_file = @"lily_tmp";
+            this.saveFile(tmp_source_file + ".ly");
+            string lilypond_location = @"lilypond";
+            string destination_file = this.getSaveFilenameFromDialog("PDF file|*.PDF", "Save music in PDF");
+
+            if (destination_file != "") {
+                var process = new Process {
+                    StartInfo = {
+                        WorkingDirectory = Directory.GetCurrentDirectory(),
+                        WindowStyle = ProcessWindowStyle.Normal,
+                        Arguments = String.Format("--pdf \"{0}\"", "./" + tmp_source_file + ".ly"),
+                        FileName = lilypond_location
+                    }
+                };
+
+                process.Start();
+                while (!process.HasExited) {}
+                File.Copy("./" + tmp_source_file + ".pdf", destination_file);
+            }
         }
 
         private void setEnable(bool state)
