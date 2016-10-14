@@ -87,7 +87,10 @@ namespace DPA_Musicsheets.Composers {
                 foreach(D_Note note in bar.notes) {
                     lilypondString += LilypondNoteComposer.placeNoteInLilypondString(note, previous_note, ref current_scope_octave);
                     lilypondString += " ";
-                    previous_note = note;
+
+                    if (!note.is_rest) {
+                        previous_note = note;
+                    }
                 }
 
                 lilypondString += "|\r\n";
