@@ -11,9 +11,13 @@ namespace DPA_Musicsheets.Composers {
         {
             string lilypondString = ""; //TODO relative octaves, see the string format
 
+            string note_alteration = "";
+            string octave_mod = "";
             char note_level = getNoteLevel(note);
-            string note_alteration = getNoteAlteration(note);
-            string octave_mod = getOctaveMod(note, previous_note, ref current_scope_octave); 
+            if (!note.is_rest) {
+                note_alteration = getNoteAlteration(note);
+                octave_mod = getOctaveMod(note, previous_note, ref current_scope_octave);
+            }
             string note_length = getNoteLength(note);
             string length_mod = getNoteModifier(note);
 

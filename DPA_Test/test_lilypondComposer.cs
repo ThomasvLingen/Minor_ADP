@@ -13,7 +13,7 @@ namespace DPA_Test {
             D_Staff staff = new D_Staff();
             staff.tempo = 120;
             staff.clef = clef.g_key;
-            staff.addMeasure(2, 4, 0);
+            staff.addMeasure(1, 4, 0);
             D_Bar bar = new D_Bar(2);
             bar.addNote(new D_Note(NoteLevel.A, 1, 4));
             bar.addNote(new D_Note(NoteLevel.B, 1, 4));

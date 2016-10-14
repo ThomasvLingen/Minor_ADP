@@ -10,6 +10,7 @@ using DPA_Musicsheets.States;
 using DPA_Musicsheets.Memento;
 using DPA_Musicsheets.Command;
 using DPA_Musicsheets.ChainOfResp;
+using DPA_Musicsheets.Composers;
 
 namespace DPA_Musicsheets
 {
@@ -142,7 +143,10 @@ namespace DPA_Musicsheets
             switch (extension) {
                 case ".mid":
                     showMidiTracks(MidiReader.ReadMidi(filename));
-                    this.songData = MidiParser.getInstance().parseFile(filename);
+                    D_Staff midi_staff = MidiParser.getInstance().parseFile(filename);
+                    string converted_lilypond = LilypondComposer.getInstance().composeLilypondFromStaff(midi_staff);
+                    this.editor.setText(converted_lilypond);
+                    this.editor.enable();
                 break;
                 case ".ly":
                     this.editor.enable();
