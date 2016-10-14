@@ -123,7 +123,7 @@ namespace DPA_Musicsheets {
             string tmp_source_file = @"lily_tmp";
             this.saveFile(tmp_source_file + ".ly");
             string lilypond_location = @"lilypond";
-            string destination_file = this.getSaveFilenameFromDialog("PDF file|*.PDF", "Save music in PDF");
+            string destination_file = this.getSaveFilenameFromDialog("PDF file|*.pdf", "Save music in PDF");
 
             if (destination_file != "") {
                 var process = new Process {
