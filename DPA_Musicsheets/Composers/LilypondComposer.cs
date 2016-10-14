@@ -18,7 +18,6 @@ namespace DPA_Musicsheets.Composers {
             return instance;
         }
 
-        //TODO add double space for lines, depending on scope
         public string composeLilypondFromStaff(D_Staff staff)
         {
             string lilypondString = "";

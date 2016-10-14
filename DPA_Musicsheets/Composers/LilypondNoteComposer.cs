@@ -9,7 +9,7 @@ namespace DPA_Musicsheets.Composers {
 
         public static string placeNoteInLilypondString(D_Note note, D_Note previous_note, ref int current_scope_octave)
         {
-            string lilypondString = ""; //TODO relative octaves, see the string format
+            string lilypondString = "";
 
             string note_alteration = "";
             string octave_mod = "";
@@ -66,12 +66,10 @@ namespace DPA_Musicsheets.Composers {
             return (note.length_modifier) ? "." : "";
         }
 
-
-        //TODO implement, use StringUtil.duplicateString
         private static string getOctaveMod(D_Note note, D_Note previous_note, ref int current_scope_octave)
         {
             int difference, notes_octave_difference;
-            string sign = "";// pak het verschil dat je krijgt van je lilypond util en tel dit op bij current octave
+            string sign = "";
 
             if (previous_note != null) {
                 notes_octave_difference = getOctaveDifference(note, previous_note);
