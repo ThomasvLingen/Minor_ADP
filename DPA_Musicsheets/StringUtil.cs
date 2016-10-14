@@ -88,7 +88,7 @@ namespace DPA_Musicsheets {
         {
             string return_string = toDuplicate;
 
-            for(int index = 0; index < times; index++) {
+            for(int index = 1; index < times; index++) {
                 return_string += toDuplicate;
             }
 

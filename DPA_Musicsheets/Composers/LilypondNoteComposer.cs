@@ -84,6 +84,8 @@ namespace DPA_Musicsheets.Composers {
                 return "";
             }
 
+            current_scope_octave += difference;
+
             return StringUtil.duplicateString(sign, difference);
         }
 
